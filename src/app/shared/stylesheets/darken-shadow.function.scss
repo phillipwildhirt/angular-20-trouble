@@ -1,0 +1,13 @@
+@use "sass:list";
+
+/* Input Value ($value) should be a shadow css shorthand: 0 4px 3rem rgba(0, 0, 0, .5)
+   Amount ($amount) should be the amount to opacify (increase opaqueness) the color by)
+ */
+
+@function darken-shadow($value, $amount) {
+  @if $value != null {
+    $return-value: list.nth($value, 1) list.nth($value, 2) list.nth($value, 3) opacify(list.nth($value, 4), $amount);
+    @return $return-value;
+  }
+  @return $value;
+}

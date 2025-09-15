@@ -1,0 +1,19 @@
+@import 'src/variables';
+
+.neg-top-sm {
+  margin-top: -.125rem
+}
+.neg-top-lg {
+  margin-top: -.25rem
+}
+
+.overflow-spacing {
+  padding-left: $badge-padding-x * 0.6;
+  letter-spacing: -0.4px;
+  transform: scaleX(0.95);
+
+  .plus {
+    font-size: 10px;
+    line-height: 32%;
+  }
+}

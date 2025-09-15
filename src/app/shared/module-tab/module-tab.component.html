@@ -1,0 +1,37 @@
+<div class="mod-tab"
+     [ngClass]="{'bg-body shadow-sm' : state === 'active' && includeShadow, 'clickable' : !subText, 'apply-background': applyBackground,
+     'mod-tab-underline': !includeShadow, 'active-tab' : state === 'active'}" dpsComponentState>
+  <div class="px-4 py-2 no-select">
+    <div class="flex-center align-items-center mod-tab-tab-sizing">
+      @if (icon.length > 0) {
+        <div class="me-2 icon-4" [class]="state === 'active' ? 'text-dpsblue' : 'text-dpsblue-550'">
+            <i [class]="icon.substring(0, 2) + ' ' + icon"></i>
+        </div>
+      }
+      <div [ngClass]="{'me-1' : notifications.length > 0}" [class]="'text-nowrap ' + titleStyle()" (cdkObserveContent)="observed('title', $event)">
+          {{ title }}
+      </div>
+      @for (notification of notifications; track trackByFn(i, notification); let i = $index) {
+        <div [ngClass]="{'me-1' : notifications.length - 1 !== i, 'mod-tab-inactive-notification' : state === 'inactive'}"
+             #t="ngbTooltip"
+             [ngbTooltip]="notification.tooltip"
+             [container]="'body'"
+             [placement]="tooltipPlacementOptions"
+             [tooltipClass]="tooltipWindowClass"
+             [openDelay]="1500"
+             (mousedown)="closeTooltipFast(t)">
+            @if (!isEmpty(notification.value) && notification.value !== '0') {
+              <dps-notification-pill [styleTag]="notification.styleTag"
+                                     [value]="notification.value"
+                                     (cdkObserveContent)="observed('notification' + i, $event)"/>
+            }
+        </div>
+      }
+      @if (!subText && dismissible) {
+        <div class="ms-1 me-n1">
+          <div class="btn-pill-close btn-pill-close-subtle" (click)="onClose($event)"></div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

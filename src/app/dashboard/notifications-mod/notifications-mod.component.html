@@ -1,0 +1,58 @@
+<div [dpsModuleDraggable]="module"
+     [moduleViewService]="dashboardViewService"
+     [isDraggableMode$]="viewAdjust$"
+     class="w-100 h-100">
+  <div id="drag-image-placeholder"></div>
+  <div #parentElementRef
+       class="bg-body shadow-sm p-3 flex-start flex-column align-items-stretch w-100 h-100">
+    <div [ngClass]="{'mb-3' : !collapsed }">
+      <div class="flex-between">
+        <a class="flex-start align-items-center">
+          <div class="flex-start align-items-center clickable no-select">
+            <div class="icon-6 text-dpsblue me-4">
+              <i class="bi bi-bell-fill"></i>
+            </div>
+            <div class="flex-start align-items-end">
+              <h5 class="me-2 text-dpsblue">Notifications</h5>
+              @if (unreadCount !== '0') {
+                <dps-notification-pill [styleTag]="'primary'"
+                                       [size]="'lg'"
+                                       [value]="unreadCount" />
+              }
+            </div>
+          </div>
+        </a>
+        <!--        if Empty should allow entire banner to expand module-->
+        <div class="flex-grow-1 ps-7"
+             (click)="onExpandCollapse()"
+             [ngClass]="{'clickable' : collapsed}"
+             style="margin: -6.5px 0;">
+          <div dpsHideDashboardMessagingSearchBar
+               [parentElementRef]="parentElementRef"
+               [isMessages]="false">
+          </div>
+        </div>
+        <div class="flex-start align-items-center">
+          <dps-button-icon icon="bi-gear-fill" color="dpsblue-light" size="sm"/>
+        </div>
+      </div>
+    </div>
+    @if (!collapsed && (dataLoading$ | async)) {
+      <div class="top-50 start-50 translate-middle position-absolute">
+        <dps-spinner [spinnerSize]="96" />
+      </div>
+    }
+    @if (!collapsed && (dataLoading$ | async) === false) {
+      <div [@showHide]=""
+           class="flex-start flex-row minh-0">
+        <div class="w-100 overflow-auto">
+          @if (!collapsed) {
+            <div>
+            </div>
+          }
+          <div class="list-group list-group-flush"> Module Loaded. </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,777 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:color';
+@use 'app/shared/stylesheets/bootstrap/color-palette.function' as color-palette;
+@import 'bootstrap/scss/functions';
+@import 'app/shared/stylesheets/strip-unit.function';
+@import 'bootstrap/scss/mixins/_box-shadow';
+@import 'bootstrap/scss/mixins/_breakpoints';
+@import 'bootstrap/scss/mixins/_buttons';
+
+
+
+$ebiz-nav-height: 66px;
+
+/*
+Define Theme Colors and Other Color Variables
+ */
+$dpsblue            : #4a5994;
+$dpsblue-dark       : #7389de;
+$dpsblue-light      : #aab3d4;
+$dpsblue-light-dark : #55628f;
+$dpsgreen           : #52c374;
+$dpsgreen-dark      : #3c9a57;
+$ebizteal           : #4a92a8;
+$ebizteal-contrast  : #359ab9;
+
+$primary                   : #007bff;
+$secondary                 : #6c757d;
+$warning                   : #ffc107;
+$warning-mustard           : #c69500;
+$warning-dark-mustard      : #664d03;
+$warning-dark-mustard-dark : $warning;
+$danger                    : #dc3545;
+$danger-dark               : tint-color($danger, 10%);
+$dark                      : #212529;
+$darknlight                : $dark;
+$darknlight-dark           : #f8f9fa; //gray-100
+
+$color-levels: (
+  "050": -12,
+  "100": -11.5,
+  "200": -11,
+  "300": -10,
+  "350": -9,
+  "400": -7,
+  "500": -5,
+  "550": -3,
+  "600": -1,
+  "700": 2,
+  "750": 4,
+  "800": 5,
+  "900": 6,
+  "950": 7
+);
+
+$dpsblue-palette       : color-palette.create-color-palette($color-levels, $dpsblue, "dpsblue");
+$dpsblue-dark-palette  : color-palette.create-color-palette($color-levels, $dpsblue-dark, "dpsblue");
+
+$dpsgreen-palette      : color-palette.create-color-palette($color-levels, $dpsgreen, "dpsgreen");
+$dpsgreen-dark-palette : color-palette.create-color-palette($color-levels, $dpsgreen-dark, "dpsgreen");
+
+$ebizteal-palette      : color-palette.create-color-palette($color-levels, $ebizteal, "ebizteal");
+
+
+$non-theme-color-levels: (
+  "100": -8.8,
+  "200": -5.3,
+  "400": -1.5,
+  "600": 1.6,
+  "700": 4.9,
+  "900": 8.4,
+);
+
+$nt-yellow          : #80823e;
+$nt-yellow-palette  : color-palette.create-color-palette($non-theme-color-levels, $nt-yellow, "nt-yellow");
+$nt-purple          : #7c76be;
+$nt-purple-palette  : color-palette.create-color-palette($non-theme-color-levels, $nt-purple, "nt-purple");
+$nt-pink            : #af64a1;
+$nt-pink-palette    : color-palette.create-color-palette($non-theme-color-levels, $nt-pink, "nt-pink");
+$nt-red             : #b36b60;
+$nt-red-palette     : color-palette.create-color-palette($non-theme-color-levels, $nt-red, "nt-red");
+$nt-brown           : #a07649;
+$nt-brown-palette   : color-palette.create-color-palette($non-theme-color-levels, $nt-brown, "nt-brown");
+$nt-green           : #3a967d;
+$nt-green-palette   : color-palette.create-color-palette($non-theme-color-levels, $nt-green, "nt-green");
+$nt-fuschia         : #b612c3;
+$nt-fuschia-palette : color-palette.create-color-palette($non-theme-color-levels, $nt-fuschia, "nt-fuschia");
+$nt-blue            : #597eaf;
+$nt-blue-palette    : color-palette.create-color-palette($non-theme-color-levels, $nt-blue, "nt-blue");
+
+$nt-colors: (
+  "nt-yellow":  $nt-yellow-palette,
+  "nt-purlple": $nt-purple-palette,
+  "nt-pink":    $nt-pink-palette,
+  "nt-red":     $nt-red-palette,
+  "nt-brown":   $nt-brown-palette,
+  "nt-green":   $nt-green-palette,
+  "nt-fuschia": $nt-fuschia-palette,
+  "nt-blue":    $nt-blue-palette,
+);
+
+$quill-color-levels: (
+  "200": -7,
+  "400": -4,
+  "600": 3,
+  "800": 6,
+);
+
+$ql-red            : #e60000;
+$ql-red-palette    : color-palette.create-color-palette($quill-color-levels, $ql-red, "ql-red");
+$ql-orange         : #ff9900;
+$ql-orange-palette : color-palette.create-color-palette($quill-color-levels, $ql-orange, "ql-orange");
+$ql-yellow         : #cccc00;
+$ql-yellow-palette : color-palette.create-color-palette($quill-color-levels, $ql-yellow, "ql-yellow");
+$ql-green          : #008a00;
+$ql-green-palette  : color-palette.create-color-palette($quill-color-levels, $ql-green, "ql-green");
+$ql-blue           : #0066cc;
+$ql-blue-palette   : color-palette.create-color-palette($quill-color-levels, $ql-blue, "ql-blue");
+$ql-purple         : #b747ff;
+$ql-purple-palette : color-palette.create-color-palette($quill-color-levels, $ql-purple, "ql-purple");
+$ql-gray           : #888888;
+$ql-gray-palette   : color-palette.create-color-palette($quill-color-levels, $ql-gray, "ql-gray");
+
+$ql-colors: (
+  "ql-red":     $ql-red-palette,
+  "ql-orange":  $ql-orange-palette,
+  "ql-yellow":  $ql-yellow-palette,
+  "ql-green":   $ql-green-palette,
+  "ql-blue":    $ql-blue-palette,
+  "ql-purple":  $ql-purple-palette,
+  "ql-gray":    $ql-gray-palette,
+);
+
+$white    : #fff;
+$gray-100 : #f8f9fa;
+$gray-150 : #f1f2f4;
+$gray-200 : #e9ecef;
+$gray-300 : #dee2e6;
+$gray-400 : #ced4da;
+$gray-500 : #adb5bd;
+$gray-600 : #79838b;
+$gray-700 : #5f6972;
+$gray-800 : #495057;
+$gray-900 : #343a40;
+$black    : #212529;
+
+$gray-palette: (
+  "gray-100": $gray-100,
+  "gray-150": $gray-150,
+  "gray-200": $gray-200,
+  "gray-300": $gray-300,
+  "gray-400": $gray-400,
+  "gray-500": $gray-500,
+  "gray-600": $gray-600,
+  "gray-700": $gray-700,
+  "gray-800": $gray-800,
+  "gray-900": $gray-900,
+);
+
+$body-color           : $black;
+
+$body-secondary-color : rgba($body-color, .59);
+$body-secondary-bg    : $gray-200;
+
+$body-tertiary-color  : rgba($body-color, .75);
+$body-tertiary-bg     : map.get($ebizteal-palette, "ebizteal-200");
+
+$body-emphasis-color  : $black;
+
+
+// to see dark mode... uncomment:
+// $color-mode-type: media-query;
+
+
+$body-color-dark               : $gray-200;
+$body-bg-dark                  : color.mix($black, $white, 95%);
+$body-secondary-color-dark     : rgba($body-color-dark, .75);
+$body-secondary-bg-dark        : $gray-900;
+$body-tertiary-color-dark      : rgba($body-color-dark, .5);
+$body-tertiary-bg-dark         : color.mix(map.get($ebizteal-palette, "ebizteal-500"), $black, 15%);
+$body-emphasis-color-dark      : $white;
+$border-color-dark             : $gray-800;
+$border-color-translucent-dark : rgba($white, .15);
+$headings-color-dark           : inherit;
+
+
+// scss-docs-start theme-text-variables
+$dpsblue-text-emphasis           : shade-color(map.get($dpsblue-palette, "dpsblue"), 60%);
+$dpsblue-light-text-emphasis     : shade-color($dpsblue-light, 60%);
+$dpsblue-400-text-emphasis       : shade-color(map.get($dpsblue-palette, "dpsblue-400"), 40%);
+$dpsblue-350-text-emphasis       : shade-color(map.get($dpsblue-palette, "dpsblue-350"), 40%);
+$dpsblue-800-text-emphasis       : shade-color(map.get($dpsblue-palette, "dpsblue-800"), 40%);
+$dpsgreen-text-emphasis          : shade-color(map.get($dpsgreen-palette, "dpsgreen"), 60%);
+$dpsgreen-800-text-emphasis      : shade-color(map.get($dpsgreen-palette, "dpsgreen-800"), 60%);
+$ebizteal-text-emphasis          : shade-color(map.get($ebizteal-palette, "ebizteal"), 50%);
+$ebizteal-contrast-text-emphasis : shade-color(map.get($ebizteal-palette, "ebizteal"), 50%);
+$ebizteal-300-text-emphasis      : shade-color(map.get($ebizteal-palette, "ebizteal-300"), 60%);
+$ebizteal-350-text-emphasis      : shade-color(map.get($ebizteal-palette, "ebizteal-350"), 60%);
+$gray-400-text-emphasis          : shade-color($gray-400, 60%);
+$primary-text-emphasis           : shade-color($primary, 60%);
+$secondary-text-emphasis         : shade-color($secondary, 60%);
+$warning-text-emphasis           : shade-color($warning, 60%);
+$danger-text-emphasis            : shade-color($danger, 60%);
+$dark-text-emphasis              : shade-color($dark, 60%);
+$darknlight-text-emphasis        : shade-color($darknlight, 60%);
+// scss-docs-end theme-text-variables
+
+// scss-docs-start theme-bg-subtle-variables
+$dpsblue-bg-subtle           : tint-color(map.get($dpsblue-palette, "dpsblue"), 80%);
+$dpsblue-light-bg-subtle     : tint-color($dpsblue-light, 80%);
+$dpsblue-400-bg-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-400"), 80%);
+$dpsblue-350-bg-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-350"), 80%);
+$dpsblue-800-bg-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-800"), 80%);
+$dpsgreen-bg-subtle          : tint-color(map.get($dpsgreen-palette, "dpsgreen"), 80%);
+$dpsgreen-800-bg-subtle      : tint-color(map.get($dpsgreen-palette, "dpsgreen-800"), 80%);
+$ebizteal-bg-subtle          : tint-color(map.get($ebizteal-palette, "ebizteal"), 80%);
+$ebizteal-contrast-bg-subtle : tint-color($ebizteal-contrast, 80%);
+$ebizteal-300-bg-subtle      : tint-color(map.get($ebizteal-palette, "ebizteal-300"), 80%);
+$ebizteal-350-bg-subtle      : tint-color(map.get($ebizteal-palette, "ebizteal-350"), 80%);
+$gray-400-bg-subtle          : tint-color($gray-400, 80%);
+$primary-bg-subtle           : tint-color($primary, 80%);
+$secondary-bg-subtle         : tint-color($secondary, 80%);
+$warning-bg-subtle           : tint-color($warning, 80%);
+$danger-bg-subtle            : tint-color($danger, 80%);
+$dark-bg-subtle              : tint-color($dark, 80%);
+$darknlight-bg-subtle        : tint-color($darknlight, 80%);
+// scss-docs-end theme-bg-subtle-variables
+
+// scss-docs-start theme-border-subtle-variables
+$dpsblue-border-subtle           : tint-color(map.get($dpsblue-palette, "dpsblue"), 60%);
+$dpsblue-light-border-subtle     : tint-color($dpsblue-light, 60%);
+$dpsblue-400-border-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-400"), 60%);
+$dpsblue-350-border-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-350"), 60%);
+$dpsblue-800-border-subtle       : tint-color(map.get($dpsblue-palette, "dpsblue-800"), 60%);
+$dpsgreen-border-subtle          : tint-color(map.get($dpsgreen-palette, "dpsgreen"), 60%);
+$dpsgreen-800-border-subtle      : tint-color(map.get($dpsgreen-palette, "dpsgreen-800"), 60%);
+$ebizteal-border-subtle          : tint-color(map.get($ebizteal-palette, "ebizteal"), 60%);
+$ebizteal-contrast-border-subtle : tint-color($ebizteal-contrast, 60%);
+$ebizteal-300-border-subtle      : tint-color(map.get($ebizteal-palette, "ebizteal-300"), 60%);
+$ebizteal-350-border-subtle      : tint-color(map.get($ebizteal-palette, "ebizteal-350"), 60%);
+$gray-400-border-subtle          : tint-color($gray-400, 60%);
+$primary-border-subtle           : tint-color($primary, 60%);
+$secondary-border-subtle         : tint-color($secondary, 60%);
+$warning-border-subtle           : tint-color($warning, 60%);
+$danger-border-subtle            : tint-color($danger, 60%);
+$dark-border-subtle              : tint-color($dark, 60%);
+$darknlight-border-subtle        : tint-color($darknlight, 60%);
+// scss-docs-end theme-border-subtle-variables
+
+$dpsblue-text-emphasis-dark           : tint-color(map.get($dpsblue-dark-palette, "dpsblue"), 40%);
+$dpsblue-light-text-emphasis-dark     : tint-color($dpsblue-light-dark, 40%);
+$dpsblue-400-text-emphasis-dark       : tint-color(map.get($dpsblue-dark-palette, "dpsblue-400"), 40%);
+$dpsblue-350-text-emphasis-dark       : tint-color(map.get($dpsblue-dark-palette, "dpsblue-350"), 40%);
+$dpsblue-800-text-emphasis-dark       : tint-color(map.get($dpsblue-dark-palette, "dpsblue-800"), 40%);
+$dpsgreen-text-emphasis-dark          : tint-color(map.get($dpsgreen-palette, "dpsgreen"), 40%);
+$dpsgreen-800-text-emphasis-dark      : tint-color(map.get($dpsgreen-palette, "dpsgreen-800"), 40%);
+$ebizteal-text-emphasis-dark          : tint-color(map.get($ebizteal-palette, "ebizteal"), 40%);
+$ebizteal-contrast-text-emphasis-dark : tint-color($ebizteal-contrast, 40%);
+$ebizteal-300-text-emphasis-dark      : tint-color(map.get($ebizteal-palette, "ebizteal-300"), 40%);
+$ebizteal-350-text-emphasis-dark      : tint-color(map.get($ebizteal-palette, "ebizteal-350"), 40%);
+$gray-400-text-emphasis-dark          : tint-color($gray-400, 40%);
+$primary-text-emphasis-dark           : tint-color($primary, 40%);
+$secondary-text-emphasis-dark         : tint-color($secondary, 40%);
+$warning-text-emphasis-dark           : tint-color($warning, 40%);
+$danger-text-emphasis-dark            : tint-color($danger-dark, 40%);
+$dark-text-emphasis-dark              : tint-color($dark, 40%);
+$darknlight-text-emphasis-dark        : tint-color($darknlight-dark, 40%);
+// scss-docs-end theme-text-dark-variables
+
+// scss-docs-start theme-bg-subtle-dark-variables
+$dpsblue-bg-subtle-dark           : shade-color(map.get($dpsblue-dark-palette, "dpsblue"), 80%);
+$dpsblue-light-bg-subtle-dark     : shade-color($dpsblue-light-dark, 80%);
+$dpsblue-400-bg-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-400"), 80%);
+$dpsblue-350-bg-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-350"), 80%);
+$dpsblue-800-bg-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-800"), 80%);
+$dpsgreen-bg-subtle-dark          : color.adjust(shade-color(map.get($dpsgreen-palette, "dpsgreen"), 40%), $alpha: -0.7);
+$dpsgreen-800-bg-subtle-dark      : shade-color(map.get($dpsgreen-palette, "dpsgreen-800"), 80%);
+$ebizteal-bg-subtle-dark          : shade-color(map.get($ebizteal-palette, "ebizteal"), 80%);
+$ebizteal-contrast-bg-subtle-dark : shade-color($ebizteal-contrast, 80%);
+$ebizteal-300-bg-subtle-dark      : shade-color(map.get($ebizteal-palette, "ebizteal-300"), 80%);
+$ebizteal-350-bg-subtle-dark      : shade-color(map.get($ebizteal-palette, "ebizteal-350"), 80%);
+$gray-400-bg-subtle-dark          : shade-color($gray-400, 80%);
+$primary-bg-subtle-dark           : shade-color($primary, 80%);
+$secondary-bg-subtle-dark         : shade-color($secondary, 80%);
+$warning-bg-subtle-dark           : shade-color($warning, 80%);
+$danger-bg-subtle-dark            : shade-color($danger-dark, 80%);
+$dark-bg-subtle-dark              : shade-color($dark, 80%);
+$darknlight-bg-subtle-dark        : shade-color($darknlight-dark, 80%);
+// scss-docs-end theme-bg-subtle-dark-variables
+
+// scss-docs-start theme-border-subtle-dark-variables
+$dpsblue-border-subtle-dark           : shade-color(map.get($dpsblue-dark-palette, "dpsblue"), 40%);
+$dpsblue-light-border-subtle-dark     : shade-color($dpsblue-light-dark, 40%);
+$dpsblue-400-border-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-400"), 40%);
+$dpsblue-350-border-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-350"), 40%);
+$dpsblue-800-border-subtle-dark       : shade-color(map.get($dpsblue-dark-palette, "dpsblue-800"), 40%);
+$dpsgreen-border-subtle-dark          : shade-color(map.get($dpsgreen-palette, "dpsgreen"), 40%);
+$dpsgreen-800-border-subtle-dark      : shade-color(map.get($dpsgreen-palette, "dpsgreen-800"), 40%);
+$ebizteal-border-subtle-dark          : shade-color(map.get($ebizteal-palette, "ebizteal"), 40%);
+$ebizteal-contrast-border-subtle-dark : shade-color($ebizteal-contrast, 40%);
+$ebizteal-300-border-subtle-dark      : shade-color(map.get($ebizteal-palette, "ebizteal-300"), 40%);
+$ebizteal-350-border-subtle-dark      : shade-color(map.get($ebizteal-palette, "ebizteal-350"), 40%);
+$gray-400-border-subtle-dark          : shade-color($gray-400, 40%);
+$primary-border-subtle-dark           : shade-color($primary, 40%);
+$secondary-border-subtle-dark         : shade-color($secondary, 40%);
+$warning-border-subtle-dark           : shade-color($warning, 40%);
+$danger-border-subtle-dark            : shade-color($danger-dark, 40%);
+$dark-border-subtle-dark              : shade-color($dark, 40%);
+$darknlight-border-subtle-dark        : shade-color($darknlight-dark, 40%);
+// scss-docs-end theme-border-subtle-dark-variables
+
+/*
+Add Custom Theme Colors from above here if you need the ENTIRE suite of buttons, cards, tables, etc.
+@note: If you ONLY need to use bg-<color> or text-<color>, add further below in $extra-use-colors.
+ */
+$theme-colors: (
+  "dpsblue"           : map.get($dpsblue-palette, "dpsblue"),
+  "dpsblue-light"     : $dpsblue-light,
+  "dpsblue-400"       : map.get($dpsblue-palette, "dpsblue-400"),
+  "dpsblue-350"       : map.get($dpsblue-palette, "dpsblue-350"),
+  "dpsgreen"          : map.get($dpsgreen-palette, "dpsgreen"),
+  "dpsgreen-800"      : map.get($dpsgreen-palette, "dpsgreen-800"),
+  "ebizteal"          : map.get($ebizteal-palette, "ebizteal"),
+  "ebizteal-300"      : map.get($ebizteal-palette, "ebizteal-300"),
+  "ebizteal-350"      : map.get($ebizteal-palette, "ebizteal-350"),
+  "ebizteal-contrast" : $ebizteal-contrast,
+  "gray-400"          : $gray-400,
+  "primary"           : $primary,
+  "secondary"         : $secondary,
+  "warning"           : $warning,
+  "danger"            : $danger,
+  "dark"              : $dark,
+  "darknlight"        : $dark,
+  "warning-mustard"   : $warning-mustard
+) !default;
+
+/*
+Add colors needed only for background (bg-<color>) and/or text (text-<color>) here.
+ */
+$extra-use-colors: (
+  "gray-500"             : $gray-500,
+  "gray-400"             : $gray-400,
+  "gray-300"             : $gray-300,
+  "gray-200"             : $gray-200,
+  "gray-150"             : $gray-150,
+  "gray-100"             : $gray-100,
+  "warning-dark-mustard" : $warning-dark-mustard,
+  "dpsgreen-500"         : map.get($dpsgreen-palette, "dpsgreen-500"),
+  "dpsgreen-800"         : map.get($dpsgreen-palette, "dpsgreen-800"),
+  "ebizteal-050"         : map.get($ebizteal-palette, "ebizteal-050"),
+  "ebizteal-200"         : map.get($ebizteal-palette, "ebizteal-200"),
+  "ebizteal-500"         : map.get($ebizteal-palette, "ebizteal-500"),
+  "ebizteal-600"         : map.get($ebizteal-palette, "ebizteal-600"),
+  "ebizteal-750"         : map.get($ebizteal-palette, "ebizteal-750"),
+  "dpsblue-050"          : map.get($dpsblue-palette, "dpsblue-050"),
+  "dpsblue-100"          : map.get($dpsblue-palette, "dpsblue-100"),
+  "dpsblue-200"          : map.get($dpsblue-palette, "dpsblue-200"),
+  "dpsblue-300"          : map.get($dpsblue-palette, "dpsblue-300"),
+  "dpsblue-350"          : map.get($dpsblue-palette, "dpsblue-350"),
+  "dpsblue-500"          : map.get($dpsblue-palette, "dpsblue-500"),
+  "dpsblue-550"          : map.get($dpsblue-palette, "dpsblue-550"),
+  "dpsblue-600"          : map.get($dpsblue-palette, "dpsblue-600"),
+  "dpsblue-750"          : map.get($dpsblue-palette, "dpsblue-750"),
+  "white"                : $white,
+  "black"                : $black,
+  "yellow"               : #ffe800,
+  "success"              : #198754, /* leave me, I'm used in a query/task/list/dropdown */
+);
+
+/*
+dpsgreen buttons need to remain white text; this is a slight adjustment to accomplish that.
+ */
+$min-contrast-ratio: 2.2;
+
+/*
+Input placeholder text lightened up.
+ */
+$input-placeholder-color:      $gray-500;
+$input-placeholder-color-dark: $gray-600;
+
+
+//$input-bg: rgba(0,0,0,0);
+
+/*
+Custom Spacers
+(see comment for actual pixels if 1rem = 16px)
+ */
+$spacer: 1rem;
+$spacers: (
+  "0"  : 0,
+  "05" : $spacer *.125, // 2 px
+  "1"  : $spacer *.25, // 4 px
+  "2"  : $spacer *.5, // 8 px
+  "3"  : $spacer *.75, // 12 px
+  "4"  : $spacer, // 16 px
+  "5"  : $spacer * 1.25, // 20 px
+  "6"  : $spacer * 1.5, // 24 px
+  "7"  : $spacer * 2, // 32 px
+  "8"  : $spacer * 3, // 48 px   ~50
+  "9"  : $spacer * 4.5, // 72 px   ~75
+  "10" : $spacer * 6, // 96 px   ~100
+  "11" : $spacer * 8, // 128 px  ~125
+  "12" : $spacer * 15.75, // 252 px  ~250
+  "100": 100%,
+);
+
+
+/*
+Custom Position Values
+(i.e. top-50, start-0, end-100)
+Example:
+  20: 20%;
+  would result in these classes:
+  top-20, start-20, end-20, bottom-20
+ */
+$position-values: (
+  0:   0,
+  25:  25%,
+  50:  50%,
+  75:  75%,
+  100: 100%
+);
+
+
+$zindex-sticky:     1000;
+$zindex-dropdown:   1020;
+$zindex-datepicker: 1020;
+
+
+$grid-breakpoints: (
+  xs:   0,
+  sm:   576px,
+  md:   768px,
+  lg:   992px,
+  xl:   1200px,
+  xxl:  1400px,
+  xxxl: 1600px,
+);
+
+$extended-breakpoints: map.merge($grid-breakpoints, (
+    xl4: 1800px,
+    xl5: 2200px,
+  )
+);
+
+
+// i.e. mx-n4 where the 'n' makes it a negative number
+$enable-negative-margins: true;
+$grid-columns: 24;
+$grid-gutter-width: 0;
+
+$variable-prefix: bs-;
+$prefix: $variable-prefix;
+// see utilities.scss for more grid map expansion
+
+
+$font-family: (
+  "Open Sans": Open Sans
+);
+$font-family-base          : Open Sans, sans-serif;
+$headings-font-weight      : 300;
+$headings-bold-font-weight : 600;
+$headings-margin-bottom    : 0;
+$font-size-base            : 1rem;
+$smaller-font-size         : 70%;
+$small-font-size           : 85%;
+$h7-font-size              : $font-size-base * math.div(strip-unit($small-font-size), 100);
+
+$body-color: $black;
+
+
+//$border-color:   $gray-200;
+$border-color             : $gray-400;
+$border-color-translucent : rgba($black, .25);
+
+$paragraph-margin-bottom: 0rem;
+
+
+$hr-margin-y : 0;
+$hr-color    : map.get($ebizteal-palette, "ebizteal");
+
+$input-padding : calc(0.75rem + .5px);
+
+$border-radius    : .125rem;
+$border-radius-lg : .2rem;
+$border-radius-sm : .07rem;
+
+$btn-border-radius      : $border-radius;
+$btn-border-radius-sm   : $border-radius-sm;
+$btn-border-radius-lg   : $border-radius-lg;
+
+$input-border-radius    : $border-radius;
+$input-border-radius-sm : $border-radius-sm;
+$input-border-radius-lg : $border-radius-lg;
+
+$pagination-border-radius-sm: $border-radius-sm;
+$pagination-border-radius-lg: $border-radius-lg;
+
+
+$enable-shadows: true;
+
+
+$box-shadow-sm-rgba    : rgba(0, 0, 0, .15);
+$box-shadow-md-rgba    : rgba(0, 0, 0, .175);
+$box-shadow-rgba       : rgba(0, 0, 0, .2);
+$box-shadow-lg-rgba    : rgba(0, 0, 0, .25);
+$box-shadow-super-rgba : rgba(0, 0, 0, .4);
+
+$box-shadows-rgba: (
+  "shadow-sm":    $box-shadow-sm-rgba,
+  "shadow-md":    $box-shadow-md-rgba,
+  "shadow":       $box-shadow-rgba,
+  "shadow-lg":    $box-shadow-lg-rgba,
+  "shadow-super": $box-shadow-super-rgba
+);
+
+$box-shadow-sm    : 0 .125rem .25rem $box-shadow-sm-rgba;
+$box-shadow-md    : 0 .25rem .5rem $box-shadow-md-rgba;
+$box-shadow       : 0 .3rem 1rem $box-shadow-rgba;
+$box-shadow-lg    : 0 .75rem 3rem $box-shadow-lg-rgba;
+$box-shadow-super : 0 .75rem 4rem $box-shadow-super-rgba;
+
+$box-shadows: (
+  "shadow-sm":    $box-shadow-sm,
+  "shadow-md":    $box-shadow-md,
+  "shadow":       $box-shadow,
+  "shadow-lg":    $box-shadow-lg,
+  "shadow-super": $box-shadow-super
+);
+
+
+$box-shadow-sm-rgba-dark    : rgba(0, 0, 0, .25);
+$box-shadow-md-rgba-dark    : rgba(0, 0, 0, .225);
+$box-shadow-rgba-dark       : rgba(0, 0, 0, .35);
+$box-shadow-lg-rgba-dark    : rgba(0, 0, 0, .4);
+$box-shadow-super-rgba-dark : rgba(0, 0, 0, .55);
+
+$box-shadows-rgba-dark: (
+  "shadow-sm":    $box-shadow-sm-rgba-dark,
+  "shadow-md":    $box-shadow-md-rgba-dark,
+  "shadow":       $box-shadow-rgba-dark,
+  "shadow-lg":    $box-shadow-lg-rgba-dark,
+  "shadow-super": $box-shadow-super-rgba-dark
+);
+
+$box-shadow-sm-dark    : 0 .125rem .25rem rgba(0, 0, 0, .25);
+$box-shadow-md-dark    : 0 .25rem .5rem rgba(0, 0, 0, .225);
+$box-shadow-dark       : 0 .3rem 1rem rgba(0, 0, 0, .35);
+$box-shadow-lg-dark    : 0 .75rem 3rem rgba(0, 0, 0, .4);
+$box-shadow-super-dark : 0 .75rem 4rem rgba(0, 0, 0, .55);
+
+$box-shadows-dark: (
+  "shadow-sm":    $box-shadow-sm-dark,
+  "shadow-md":    $box-shadow-md-dark,
+  "shadow":       $box-shadow-dark,
+  "shadow-lg":    $box-shadow-lg-dark,
+  "shadow-super": $box-shadow-super-dark
+);
+
+
+$table-header-bottom-border      : 0 1px 0 var(--#{$prefix}ebizteal-350);
+$table-header-bottom-border-dark : 0 1px 0 var(--ebizteal-800);
+
+$table-hover-bg-factor      : .06;
+$table-striped-bg-factor    : .035;
+$table-striped-bg-rgba      : rgba($body-emphasis-color, $table-striped-bg-factor);
+$table-striped-bg-dark-rgba : rgba($body-emphasis-color-dark, $table-striped-bg-factor);
+$table-border-color         : $border-color;
+$table-head-line-height     : 1.2;
+
+$table-bg-scale: -70%;
+$table-border-factor: .2;
+
+$table-bg: inherit;
+
+
+$popover-bg            : var(--#{$prefix}dpsblue-bg-subtle);
+$popover-arrow-color   : $popover-bg;
+$popover-header-bg     : var(--#{$prefix}dpsblue-800-bg-subtle);
+$popover-header-color  : var(--#{$prefix}dpsblue-800-text-emphasis);
+$popover-body-color    : var(--#{$prefix}dpsblue-text-emphasis);
+
+$popover-border-radius : $border-radius;
+$popover-border-width  : 0.001px;
+$popover-box-shadow    : var(--#{$prefix}box-shadow-md);
+
+$popover2-bg           : var(--bs-body-bg);
+$popover2-border-color : var(--bs-border-color-translucent);
+$popover2-arrow-color  : $popover2-bg;
+$popover2-header-bg    : rgba(var(--bs-body-bg-rgb), 3%);
+$popover2-header-color : inherit;
+$popover2-body-color   : var(--bs-body-color);
+
+
+$tooltip-color         : $white;
+$tooltip-bg            : map.get($dpsblue-palette, "dpsblue-800");
+$tooltip-border-radius : $border-radius-lg;
+$tooltip-opacity       : .9;
+$tooltip-padding-y     : $spacer * .25;
+$tooltip-padding-x     : $spacer * .5;
+
+$tooltip-arrow-color   : $tooltip-bg;
+
+$popover3-bg           : color.adjust($tooltip-bg, $alpha: -0.1);
+$popover3-arrow-color  : $popover3-bg;
+$popover3-header-bg    : color.adjust($popover3-bg, $lightness: -3%);
+$popover3-header-color : $white;
+$popover3-body-color   : $white;
+
+
+$dropdown-link-active-bg  : map.get($ebizteal-palette, "ebizteal");
+$dropdown-border-width    : 0;
+$dropdown-link-hover-bg   : var(--#{$prefix}secondary-bg);
+
+$dropdown-dark-bg         : var(--#{$prefix}body-bg);
+$dropdown-dark-box-shadow : map.get($box-shadows-dark, "shadow-super");
+$dropdown-link-hover-bg   : var(--#{$prefix}secondary-border-subtle);
+
+
+$focus-ring-opacity: .25;
+
+
+$component-active-bg   : map.get($ebizteal-palette, "ebizteal");
+$focus-ring-width      : .25rem;
+$focus-ring-color      : rgba($component-active-bg, $focus-ring-opacity);
+$focus-ring-opacity    : .25;
+$focus-ring-blur       : 0;
+$focus-ring-box-shadow : 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color;
+
+
+
+$input-btn-focus-width:         $focus-ring-width;
+$input-btn-focus-color-opacity: $focus-ring-opacity;
+$input-btn-focus-color:         $focus-ring-color;
+$input-btn-focus-blur:          $focus-ring-blur;
+
+$input-focus-width:             $input-btn-focus-width;
+
+
+
+$form-check-input-width: 1.25em;
+$form-check-input-border-radius: .125em;
+
+$form-switch-width: 2.25em;
+$form-switch-padding-start: $form-switch-width + .5em;
+$form-switch-border-radius: $form-switch-width;
+
+
+$enable-validation-icons                 : true;
+
+$form-feedback-valid-color               : map.get($dpsgreen-palette, "dpsgreen");
+$form-feedback-valid-color-dark          : $form-feedback-valid-color;
+$form-feedback-valid-border-color-dark   : $form-feedback-valid-color-dark;
+$form-valid-color-dark                   : $form-feedback-valid-color-dark;
+$form-valid-border-color-dark            : $form-feedback-valid-border-color-dark;
+$form-feedback-icon-valid-color          : $form-feedback-valid-color;
+$form-feedback-icon-valid-color-dark     : $form-feedback-valid-color;
+$form-feedback-icon-valid                : url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#{$form-feedback-icon-valid-color}' class='bi bi-check-circle' viewBox='0 0 16 16'><path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/><path d='M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z'/></svg>");
+$form-feedback-icon-valid-dark           : $form-feedback-icon-valid;
+
+$form-feedback-invalid-color             : $danger;
+$form-feedback-invalid-color-dark        : $danger-dark;
+$form-feedback-icon-invalid-color        : $form-feedback-invalid-color;
+$form-feedback-icon-invalid-color-dark   : $form-feedback-invalid-color-dark;
+$form-feedback-invalid-border-color      : $form-feedback-invalid-color;
+$form-feedback-invalid-border-color-dark : $form-feedback-invalid-color-dark;
+$form-invalid-color-dark                 : $form-feedback-invalid-color-dark;
+$form-invalid-border-color-dark          : $form-feedback-invalid-color-dark;
+$form-feedback-icon-invalid              : url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>") !default;
+$form-feedback-icon-invalid-dark         : url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color-dark}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color-dark}' stroke='none'/></svg>") !default;
+
+$form-feedback-link-verified-color       : map.get($ebizteal-palette, "ebizteal");
+$form-feedback-icon-link-verified-color  : $form-feedback-link-verified-color;
+
+$form-feedback-icon-saved                : url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='57px' height='16' viewBox='0 0 57 16' fill='#{$form-feedback-icon-valid-color}' fill-rule='evenodd'><text x='0' y='12.5' style='font-family: Open Sans; font-size: .85rem; font-style: italic;'>Saved</text><path d='M49,16c4.42,0,8-3.58,8-8S53.42,0,49,0s-8,3.58-8,8,3.58,8,8,8Zm0-1c3.87,0,7-3.13,7-7s-3.13-7-7-7-7,3.13-7,7,3.13,7,7,7Z'/><path d='M51.97,4.97c.29-.29,.77-.29,1.06,0,.29,.29,.29,.76,.01,1.05l-3.99,4.99-.02,.02c-.29,.29-.77,.29-1.06,0l-2.65-2.65c-.29-.29-.29-.77,0-1.06,.29-.29,.77-.29,1.06,0l2.09,2.09,3.47-4.42,.02-.02Z'/></svg>");
+$form-feedback-icon-saved-dark           : $form-feedback-icon-saved;
+
+
+$form-validation-states: (
+  "valid": (
+    "color"           : var(--#{$prefix}form-valid-color),
+    "icon"            : $form-feedback-icon-valid,
+    "icon-dark"       : $form-feedback-icon-valid-dark,
+    "tooltip-color"   : #fff,
+    "tooltip-bg-color": var(--dpsgreen-700),
+    "focus-box-shadow": 0 0 $input-btn-focus-blur $input-focus-width rgba(var(--#{$prefix}form-valid-color-rgb), $input-btn-focus-color-opacity),
+    "border-color"    : var(--#{$prefix}form-valid-border-color),
+  ),
+  "invalid": (
+    "color"           : var(--#{$prefix}form-invalid-color),
+    "icon"            : $form-feedback-icon-invalid,
+    "icon-dark"       : $form-feedback-icon-invalid-dark,
+    "tooltip-color"   : #fff,
+    "tooltip-bg-color": var(--#{$prefix}danger),
+    "focus-box-shadow": 0 0 $input-btn-focus-blur $input-focus-width rgba(var(--#{$prefix}form-invalid-color-rgb), $input-btn-focus-color-opacity),
+    "border-color"    : var(--#{$prefix}form-invalid-border-color),
+  ),
+  "saved": (
+    "color"           : var(--#{$prefix}form-valid-color),
+    "icon"            : $form-feedback-icon-saved,
+    "icon-dark"       : $form-feedback-icon-saved-dark,
+    "tooltip-color"   : #fff,
+    "tooltip-bg-color": var(--dpsgreen-700),
+    "focus-box-shadow": 0 0 $input-btn-focus-blur $input-focus-width rgba(var(--#{$prefix}form-valid-color-rgb), $input-btn-focus-color-opacity),
+    "border-color"    : var(--#{$prefix}form-valid-border-color),
+    "padding-right"   : 4.5rem
+  )
+);
+
+
+$zindex-levels: (
+  n1:   -1,
+  0:    0,
+  1:    1,
+  2:    2,
+  3:    3,
+  75:   75,
+  100:  100,
+  200:  200,
+  300:  300,
+  400:  400,
+  990:  990,
+  1000: 1000,
+  2000: 2000
+);
+
+
+
+$btn-padding-x        : 1.5rem;
+$btn-padding-x-sm     : 1rem;
+$btn-padding-x-lg     : 3rem;
+$btn-box-shadow       : 0 0 0 0;
+$btn-disabled-opacity : .5;
+
+
+$card-border-width: 0;
+
+
+$modal-md                   : 520px;
+$modal-content-border-width : 0;
+
+$modal-content-box-shadow-xs    : var(--#{$prefix}box-shadow-super);
+$modal-content-box-shadow-sm-up : var(--#{$prefix}box-shadow-lg);
+
+$modal-backdrop-bg              : $black;
+$modal-backdrop-opacity         : .6;
+
+
+$toast-max-width: 550px;
+
+
+$tooltip-border-radius: $border-radius;
+
+
+$list-group-border-radius: $border-radius;
+//$list-group-border-width:           1px;
+
+
+$accordion-border-width            : 0px;
+$accordion-button-active-bg        : var(--#{$prefix}ebizteal-bg-subtle);
+$accordion-button-bg               : inherit;
+$accordion-button-active-bg        : inherit;
+$accordion-bg                      : inherit;
+$accordion-button-focus-box-shadow : 0 0 0 0;
+
+
+$link-decoration: none;
+
+
+
+
+
+
+
+// MUST BE LAST
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';

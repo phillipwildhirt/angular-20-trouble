@@ -1,0 +1,266 @@
+@use 'sass:map';
+
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+// scss-docs-end theme-colors-rgb
+
+// scss-docs-start theme-text-map
+//\:\s+shade\-color\(\$[a-z-0-9]+\, 60\%\)\;
+
+//\$([a-z-0-9]+)(-[a-z]+)(-[a-z]+)
+//  "$1": \$$1$2$3
+$theme-colors-text: (
+  "dpsblue"               : $dpsblue-text-emphasis,
+  "dpsblue-light"         : $dpsblue-light-text-emphasis,
+  "dpsblue-400"           : $dpsblue-400-text-emphasis,
+  "dpsblue-350"           : $dpsblue-350-text-emphasis,
+  "dpsblue-800"           : $dpsblue-800-text-emphasis,
+  "dpsgreen"              : $dpsgreen-text-emphasis,
+  "dpsgreen-800"          : $dpsgreen-800-text-emphasis,
+  "ebizteal"              : $ebizteal-text-emphasis,
+  "ebizteal-contrast"     : $ebizteal-contrast-text-emphasis,
+  "ebizteal-300"          : $ebizteal-300-text-emphasis,
+  "ebizteal-350"          : $ebizteal-350-text-emphasis,
+  "gray-400"              : $gray-400-text-emphasis,
+  "primary"               : $primary-text-emphasis,
+  "secondary"             : $secondary-text-emphasis,
+  "warning"               : $warning-text-emphasis,
+  "danger"                : $danger-text-emphasis,
+  "dark"                  : $dark-text-emphasis,
+  "darknlight"            : $darknlight-text-emphasis,
+);
+// scss-docs-end theme-text-map
+
+// scss-docs-start theme-bg-subtle-map
+$theme-colors-bg-subtle: (
+  "dpsblue"               : $dpsblue-bg-subtle,
+  "dpsblue-light"         : $dpsblue-light-bg-subtle,
+  "dpsblue-400"           : $dpsblue-400-bg-subtle,
+  "dpsblue-350"           : $dpsblue-350-bg-subtle,
+  "dpsblue-800"           : $dpsblue-800-bg-subtle,
+  "dpsgreen"              : $dpsgreen-bg-subtle,
+  "dpsgreen-800"          : $dpsgreen-800-bg-subtle,
+  "ebizteal"              : $ebizteal-bg-subtle,
+  "ebizteal-contrast"     : $ebizteal-contrast-bg-subtle,
+  "ebizteal-300"          : $ebizteal-300-bg-subtle,
+  "ebizteal-350"          : $ebizteal-350-bg-subtle,
+  "gray-400"              : $gray-400-bg-subtle,
+  "primary"               : $primary-bg-subtle,
+  "secondary"             : $secondary-bg-subtle,
+  "warning"               : $warning-bg-subtle,
+  "danger"                : $danger-bg-subtle,
+  "dark"                  : $dark-bg-subtle,
+  "darknlight"            : $darknlight-bg-subtle,
+);
+// scss-docs-end theme-bg-subtle-map
+
+// scss-docs-start theme-border-subtle-map
+$theme-colors-border-subtle: (
+  "dpsblue"               : $dpsblue-border-subtle,
+  "dpsblue-light"         : $dpsblue-light-border-subtle,
+  "dpsblue-400"           : $dpsblue-400-border-subtle,
+  "dpsblue-350"           : $dpsblue-350-border-subtle,
+  "dpsblue-800"           : $dpsblue-800-border-subtle,
+  "dpsgreen"              : $dpsgreen-border-subtle,
+  "dpsgreen-800"          : $dpsgreen-800-border-subtle,
+  "ebizteal"              : $ebizteal-border-subtle,
+  "ebizteal-contrast"     : $ebizteal-contrast-border-subtle,
+  "ebizteal-300"          : $ebizteal-300-border-subtle,
+  "ebizteal-350"          : $ebizteal-350-border-subtle,
+  "gray-400"              : $gray-400-border-subtle,
+  "primary"               : $primary-border-subtle,
+  "secondary"             : $secondary-border-subtle,
+  "warning"               : $warning-border-subtle,
+  "danger"                : $danger-border-subtle,
+  "dark"                  : $dark-border-subtle,
+  "darknlight"            : $darknlight-border-subtle,
+);
+// scss-docs-end theme-border-subtle-map
+
+$theme-colors-text-dark: null !default;
+$theme-colors-bg-subtle-dark: null !default;
+$theme-colors-border-subtle-dark: null !default;
+
+@if $enable-dark-mode {
+  // scss-docs-start theme-text-dark-map
+  $theme-colors-text-dark: (
+    "dpsblue"           : $dpsblue-text-emphasis-dark,
+    "dpsblue-light"     : $dpsblue-light-text-emphasis-dark,
+    "dpsblue-400"       : $dpsblue-400-text-emphasis-dark,
+    "dpsblue-350"       : $dpsblue-350-text-emphasis-dark,
+    "dpsblue-800"       : $dpsblue-800-text-emphasis-dark,
+    "dpsgreen"          : $dpsgreen-text-emphasis-dark,
+    "dpsgreen-800"      : $dpsgreen-800-text-emphasis-dark,
+    "ebizteal"          : $ebizteal-text-emphasis-dark,
+    "ebizteal-contrast" : $ebizteal-contrast-text-emphasis-dark,
+    "ebizteal-300"      : $ebizteal-300-text-emphasis-dark,
+    "ebizteal-350"      : $ebizteal-350-text-emphasis-dark,
+    "gray-400"          : $gray-400-text-emphasis-dark,
+    "primary"           : $primary-text-emphasis-dark,
+    "secondary"         : $secondary-text-emphasis-dark,
+    "warning"           : $warning-text-emphasis-dark,
+    "danger"            : $danger-text-emphasis-dark,
+    "dark"              : $dark-text-emphasis-dark,
+    "darknlight"        : $darknlight-text-emphasis-dark,
+  );
+  // scss-docs-end theme-text-dark-map
+
+  // scss-docs-start theme-bg-subtle-dark-map
+  $theme-colors-bg-subtle-dark: (
+    "dpsblue"           : $dpsblue-bg-subtle-dark,
+    "dpsblue-light"     : $dpsblue-light-bg-subtle-dark,
+    "dpsblue-400"       : $dpsblue-400-bg-subtle-dark,
+    "dpsblue-350"       : $dpsblue-350-bg-subtle-dark,
+    "dpsblue-800"       : $dpsblue-800-bg-subtle-dark,
+    "dpsgreen"          : $dpsgreen-bg-subtle-dark,
+    "dpsgreen-800"      : $dpsgreen-800-bg-subtle-dark,
+    "ebizteal"          : $ebizteal-bg-subtle-dark,
+    "ebizteal-contrast" : $ebizteal-contrast-bg-subtle-dark,
+    "ebizteal-300"      : $ebizteal-300-bg-subtle-dark,
+    "ebizteal-350"      : $ebizteal-350-bg-subtle-dark,
+    "gray-400"          : $gray-400-bg-subtle-dark,
+    "primary"           : $primary-bg-subtle-dark,
+    "secondary"         : $secondary-bg-subtle-dark,
+    "warning"           : $warning-bg-subtle-dark,
+    "danger"            : $danger-bg-subtle-dark,
+    "dark"              : $dark-bg-subtle-dark,
+    "darknlight"        : $darknlight-bg-subtle-dark,
+  );
+  // scss-docs-end theme-bg-subtle-dark-map
+
+  // scss-docs-start theme-border-subtle-dark-map
+  $theme-colors-border-subtle-dark: (
+    "dpsblue"           : $dpsblue-border-subtle-dark,
+    "dpsblue-light"     : $dpsblue-light-border-subtle-dark,
+    "dpsblue-400"       : $dpsblue-400-border-subtle-dark,
+    "dpsblue-350"       : $dpsblue-350-border-subtle-dark,
+    "dpsblue-800"       : $dpsblue-800-border-subtle-dark,
+    "dpsgreen"          : $dpsgreen-border-subtle-dark,
+    "dpsgreen-800"      : $dpsgreen-800-border-subtle-dark,
+    "ebizteal"          : $ebizteal-border-subtle-dark,
+    "ebizteal-contrast" : $ebizteal-contrast-border-subtle-dark,
+    "ebizteal-300"      : $ebizteal-300-border-subtle-dark,
+    "ebizteal-350"      : $ebizteal-350-border-subtle-dark,
+    "gray-400"          : $gray-400-border-subtle-dark,
+    "primary"           : $primary-border-subtle-dark,
+    "secondary"         : $secondary-border-subtle-dark,
+    "warning"           : $warning-border-subtle-dark,
+    "danger"            : $danger-border-subtle-dark,
+    "dark"              : $dark-border-subtle-dark,
+    "darknlight"        : $darknlight-border-subtle-dark,
+  );
+  // scss-docs-end theme-border-subtle-dark-map
+}
+
+// Utilities maps
+//
+// Extends the default `$theme-colors` maps to help create our utilities.
+
+// Come v6, we'll de-dupe these variables. Until then, for backward compatibility, we keep them to reassign.
+// scss-docs-start utilities-colors
+$utilities-colors: $theme-colors-rgb;
+// scss-docs-end utilities-colors
+
+// scss-docs-start utilities-text-colors
+$utilities-text: map.merge(
+    $utilities-colors,
+    (
+      "black" : to-rgb($black),
+      "white" : to-rgb($white),
+      "body"  : to-rgb($body-color)
+    )
+);
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text");
+
+$utilities-text-emphasis-colors: (
+  "dpsblue-emphasis"           : var(--#{$prefix}dpsblue-text-emphasis),
+  "dpsblue-light-emphasis"     : var(--#{$prefix}dpsblue-light-text-emphasis),
+  "dpsblue-400-emphasis"       : var(--#{$prefix}dpsblue-400-text-emphasis),
+  "dpsblue-350-emphasis"       : var(--#{$prefix}dpsblue-350-text-emphasis),
+  "dpsblue-800-emphasis"       : var(--#{$prefix}dpsblue-800-text-emphasis),
+  "dpsgreen-emphasis"          : var(--#{$prefix}dpsgreen-text-emphasis),
+  "dpsgreen-800-emphasis"      : var(--#{$prefix}dpsgreen-800-text-emphasis),
+  "ebizteal-emphasis"          : var(--#{$prefix}ebizteal-text-emphasis),
+  "ebizteal-contrast-emphasis" : var(--#{$prefix}ebizteal-contrast-text-emphasis),
+  "ebizteal-300-emphasis"      : var(--#{$prefix}ebizteal-300-text-emphasis),
+  "ebizteal-350-emphasis"      : var(--#{$prefix}ebizteal-350-text-emphasis),
+  "gray-400-emphasis"          : var(--#{$prefix}gray-400-text-emphasis),
+  "primary-emphasis"           : var(--#{$prefix}primary-text-emphasis),
+  "secondary-emphasis"         : var(--#{$prefix}secondary-text-emphasis),
+  "warning-emphasis"           : var(--#{$prefix}warning-text-emphasis),
+  "danger-emphasis"            : var(--#{$prefix}danger-text-emphasis),
+  "dark-emphasis"              : var(--#{$prefix}dark-text-emphasis),
+  "darknlight-emphasis"        : var(--#{$prefix}darknlight-text-emphasis),
+);
+// scss-docs-end utilities-text-colors
+
+// scss-docs-start utilities-bg-colors
+$utilities-bg: map.merge(
+    $utilities-colors,
+    (
+      "black" : to-rgb($black),
+      "white" : to-rgb($white),
+      "body"  : to-rgb($body-bg)
+    )
+);
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
+
+$utilities-bg-subtle: (
+  "dpsblue-subtle"           : var(--#{$prefix}dpsblue-bg-subtle),
+  "dpsblue-light-subtle"     : var(--#{$prefix}dpsblue-light-bg-subtle),
+  "dpsblue-400-subtle"       : var(--#{$prefix}dpsblue-400-bg-subtle),
+  "dpsblue-350-subtle"       : var(--#{$prefix}dpsblue-350-bg-subtle),
+  "dpsblue-800-subtle"       : var(--#{$prefix}dpsblue-800-bg-subtle),
+  "dpsgreen-subtle"          : var(--#{$prefix}dpsgreen-bg-subtle),
+  "dpsgreen-800-subtle"      : var(--#{$prefix}dpsgreen-800-bg-subtle),
+  "ebizteal-subtle"          : var(--#{$prefix}ebizteal-bg-subtle),
+  "ebizteal-contrast-subtle" : var(--#{$prefix}ebizteal-contrast-bg-subtle),
+  "ebizteal-300-subtle"      : var(--#{$prefix}ebizteal-300-bg-subtle),
+  "ebizteal-350-subtle"      : var(--#{$prefix}ebizteal-350-bg-subtle),
+  "gray-400-subtle"          : var(--#{$prefix}gray-400-bg-subtle),
+  "primary-subtle"           : var(--#{$prefix}primary-bg-subtle),
+  "secondary-subtle"         : var(--#{$prefix}secondary-bg-subtle),
+  "warning-subtle"           : var(--#{$prefix}warning-bg-subtle),
+  "danger-subtle"            : var(--#{$prefix}danger-bg-subtle),
+  "dark-subtle"              : var(--#{$prefix}dark-bg-subtle),
+  "darknlight-subtle"        : var(--#{$prefix}darknlight-bg-subtle),
+);
+// scss-docs-end utilities-bg-colors
+
+// scss-docs-start utilities-border-colors
+$utilities-border: map.merge(
+    $utilities-colors,
+    (
+      "black": to-rgb($black),
+      "white": to-rgb($white)
+    )
+);
+$utilities-border-colors: map-loop($utilities-border, rgba-css-var, "$key", "border");
+
+$utilities-border-subtle: (
+  "dpsblue-subtle"           : var(--#{$prefix}dpsblue-border-subtle),
+  "dpsblue-light-subtle"     : var(--#{$prefix}dpsblue-light-border-subtle),
+  "dpsblue-400-subtle"       : var(--#{$prefix}dpsblue-400-border-subtle),
+  "dpsblue-350-subtle"       : var(--#{$prefix}dpsblue-350-border-subtle),
+  "dpsblue-800-subtle"       : var(--#{$prefix}dpsblue-800-border-subtle),
+  "dpsgreen-subtle"          : var(--#{$prefix}dpsgreen-border-subtle),
+  "dpsgreen-subtle-800"      : var(--#{$prefix}dpsgreen-800-border-subtle),
+  "ebizteal-subtle"          : var(--#{$prefix}ebizteal-border-subtle),
+  "ebizteal-contrast-subtle" : var(--#{$prefix}ebizteal-contrast-border-subtle),
+  "ebizteal-300-subtle"      : var(--#{$prefix}ebizteal-300-border-subtle),
+  "ebizteal-350-subtle"      : var(--#{$prefix}ebizteal-350-border-subtle),
+  "gray-400-subtle"          : var(--#{$prefix}gray-400-border-subtle),
+  "primary-subtle"           : var(--#{$prefix}primary-border-subtle),
+  "secondary-subtle"         : var(--#{$prefix}secondary-border-subtle),
+  "warning-subtle"           : var(--#{$prefix}warning-border-subtle),
+  "danger-subtle"            : var(--#{$prefix}danger-border-subtle),
+  "dark-subtle"              : var(--#{$prefix}dark-border-subtle),
+  "darknlight-subtle"        : var(--#{$prefix}darknlight-border-subtle),
+);
+
+$utilities-links-underline: map-loop($utilities-colors, rgba-css-var, "$key", "link-underline");
+
+$negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
+
+$gutters: $spacers;
+
+$font-sizes: map.merge($font-sizes, (7: $h7-font-size));

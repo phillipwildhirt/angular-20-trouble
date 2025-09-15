@@ -1,0 +1,14 @@
+@use "sass:math";
+@import 'src/variables';
+
+// 222px = 13.875rem
+$menu-width              : 13.875rem;
+// 66px = 4.125rem
+$menu-closed-width       : 4.125rem;
+
+$menu-item-border-radius : 3px;
+
+$icon-size               : 1.5rem;
+$inline-gap              : .75rem;
+
+$menu-padding            : 1rem;

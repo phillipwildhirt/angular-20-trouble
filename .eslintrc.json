@@ -1,0 +1,113 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "env": {
+    "es6": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json"
+        ],
+        "createDefaultProgram": true,
+        "ecmaVersion": "latest"
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "semi": "error",
+        "quotes": [
+          2,
+          "single"
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "dps",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "dps",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/no-input-rename": [
+          "error",
+          {
+            "allowedNames": ["dpsSkeleton"] // Add any specific directive names here if you want to allow aliasing only for certain directives
+          }
+        ],
+        "@angular-eslint/component-max-inline-declarations": [
+          "error",
+          {
+            "template": 50,
+            "styles": 15
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "parser": "@angular-eslint/template-parser",
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/template/prefer-self-closing-tags": [
+          "error"
+        ],
+        "@angular-eslint/template/prefer-control-flow": [
+          "error"
+        ],
+        "@angular-eslint/template/conditional-complexity": [
+          "error",
+          {
+            "maxComplexity": 6
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/app/admin/create-edit-modal/**/*.component.ts",
+        "src/app/admin/events/**/*.component.ts",
+        "src/app/admin/icon-library/**/*.component.ts",
+        "src/app/admin/list-setup/**/*.component.ts",
+        "src/app/admin/menus/**/*.component.ts",
+        "src/app/admin/message-tags/**/*.component.ts",
+        "src/app/admin/models/**/*.component.ts",
+        "src/app/admin/queries-tasks/**/*.component.ts",
+        "src/app/admin/submittal-addresses/**/*.component.ts",
+        "src/app/dashboard/**/*.component.ts",
+        "src/app/docs/**/*.component.ts",
+        "src/app/dps-side-nav/**/*.component.ts",
+        "src/app/messaging/**/*.ts",
+        "src/app/settings/settings.component.ts",
+        "src/app/style/style.component.ts",
+        "src/app/submittals/**/*.ts",
+        "src/app/support/support.component.ts",
+        "src/app/support/support-modal-container.component.ts",
+        "src/app/app*.component.ts"
+      ],
+      "rules": {
+        "@angular-eslint/prefer-standalone": "off"
+      }
+    }
+  ]
+}

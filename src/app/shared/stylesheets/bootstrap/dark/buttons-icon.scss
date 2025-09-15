@@ -1,0 +1,28 @@
+@use 'sass:map';
+
+@include color-mode(dark) {
+  $theme-colors-dark: (
+    "dpsblue":            map.get($dpsblue-dark-palette, "dpsblue"),
+    "dpsblue-light":      $dpsblue-light-dark,
+    "dpsblue-400":        map.get($dpsblue-dark-palette, "dpsblue-400"),
+    "dpsblue-350":        map.get($dpsblue-dark-palette, "dpsblue-350"),
+    "dpsgreen":           map.get($dpsgreen-dark-palette, "dpsgreen"),
+    "danger":             $danger-dark,
+    "darknlight":         $darknlight-dark
+  );
+  @each $color, $value in $theme-colors-dark {
+    .btn-ic-#{$color} {
+      @include button-icon-variant($value) {
+        /* TODO this creates 3000+ lines of styles for toggle buttons. Perhaps we can trim it when DPS design is further along.
+            We would need to create a new map of each of the toggled colors we use in variables.scss,
+            and iterate only over that for each theme color. theme colors (~13) * toggled color map (maybe ~5)
+         */
+        @each $color-toggled, $value-toggled in $theme-colors-dark {
+          &.btn-ic-tog-#{$color-toggled} {
+            @include button-icon-toggle-variant($value, $value-toggled);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,771 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:color';
+$OpenSansPath: '../fonts';
+$OpenSansVersion: '1.2.4';
+@import 'open-sans-fontface/open-sans';
+@import 'variables';
+@import 'maps';
+@import 'bootstrap/scss/_mixins.scss';
+@import 'utilities';
+@import 'bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'app/shared/stylesheets/list-group-subtle.bs53';
+@import 'src/app/shared/stylesheets/dropdown-max-height';
+
+
+
+.flex-center {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+}
+
+.flex-between {
+  @extend .d-flex;
+  @extend .justify-content-between;
+}
+
+.flex-start {
+  @extend .d-flex;
+  @extend .justify-content-start;
+}
+
+.flex-end {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-end;
+}
+
+.delete-modal-size {
+  .modal-lg {
+    width  : 650px;
+    height : 220px;
+  }
+}
+
+.submittal-modal {
+  width     : 90% !important;
+  max-width : 90% !important;
+  min-width : 90% !important;
+}
+
+.submittal-modal-custom-dps-scrollable-modal-dialog {
+  @extend .custom-dps-scrollable-modal-dialog;
+}
+
+//Need to Update????
+.submittal-modal-custom-dps-scrollable-modal-dialog-auto {
+  @extend .custom-dps-scrollable-modal-dialog-auto;
+  >div>*>div{
+    max-height: calc(100vh - (#{$modal-dialog-margin-y-sm-up} * 2)) !important;
+  }
+}
+
+/**  Cursors   */
+.clickable {
+  cursor: pointer;
+}
+
+.default-cursor {
+  cursor: default;
+}
+
+.progress-cursor {
+  cursor: progress !important;
+}
+
+.wait {
+  cursor: wait !important;
+}
+
+.no-drop {
+  cursor: no-drop;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}
+
+$white-spaces: ('pre', 'initial', 'pre-line', 'pre-wrap', 'nowrap');
+@each $white-space in $white-spaces {
+  .#{$white-space}-white-space {
+    white-space: #{$white-space};
+  }
+}
+
+.h-fit-content {
+  height: fit-content;
+}
+.w-fit-content {
+  width: fit-content;
+}
+
+/**  Build Extra Use Colors text-* and bg-* classes   */
+
+@each $color, $value in $extra-use-colors {
+  .text-#{$color} {
+    color: $value !important;
+  }
+  .bg-#{$color} {
+    background: $value !important;
+  }
+}
+.text-invalid {
+  color: var(--#{$prefix}form-invalid-color);
+}
+@include color-mode(dark) {
+  .text-warning-dark-mustard {
+    color: $warning-dark-mustard-dark !important;
+  }
+  .bg-warning-dark-mustard {
+    background: $warning-dark-mustard-dark !important;
+  }
+}
+
+
+@each $palette, $palette-map in $nt-colors {
+  @each $color, $value in $palette-map {
+    .text-#{$color} {
+      color: var(--#{$prefix}#{$color}) !important;
+    }
+    .bg-#{$color} {
+      background: var(--#{$prefix}#{$color}) !important;
+    }
+  }
+}
+
+
+:root {
+  @include color-mode(light) {
+    @each $shade, $value in $dpsblue-palette {
+      --#{$shade}: #{$value};
+    }
+  }
+  @include color-mode(dark) {
+    @each $shade, $value in $dpsblue-dark-palette {
+      --#{$shade}: #{$value};
+    }
+  }
+  @each $shade, $value in $ebizteal-palette {
+    --#{$shade}: #{$value};
+  }
+  @each $shade, $value in $dpsgreen-palette {
+    --#{$shade}: #{$value};
+  }
+  @each $shade, $value in $gray-palette {
+    --#{$shade}: #{$value};
+  }
+
+  @include color-mode(light) {
+    @each $shade, $value in $dpsblue-palette {
+      --#{$shade}-rgb: #{to-rgb($value)};
+    }
+  }
+  @include color-mode(dark) {
+    @each $shade, $value in $dpsblue-dark-palette {
+      --#{$shade}-rgb: #{to-rgb($value)};
+    }
+  }
+  @each $shade, $value in $ebizteal-palette {
+    --#{$shade}-rgb: #{to-rgb($value)};
+  }
+  @each $shade, $value in $dpsgreen-palette {
+    --#{$shade}-rgb: #{to-rgb($value)};
+  }
+  @each $shade, $value in $gray-palette {
+    --#{$shade}-rgb: #{to-rgb($value)};
+  }
+}
+
+// Bootstrap Icons
+// Adds Icon classes based on spacer sizing: i.e. 'icon-4' = 16px icon
+
+@each $spacer, $value in $spacers {
+  .icon-#{$spacer} {
+    position       : relative;
+    text-align     : center;
+    vertical-align : middle;
+    font-size      : $value;
+    max-height     : $value;
+    max-width      : $value;
+    min-height     : $value;
+    min-width      : $value;
+
+    & i {
+      position : absolute;
+      top      : 0;
+      left     : 0;
+    }
+  }
+}
+/* All Bootstrap Icons will be framed square with their font-size
+  Just specify font-size. */
+[class^="bi-"], [class*=" bi-"] {
+  line-height: 1;
+}
+[class^="ai-"], [class*=" ai-"] {
+  line-height: 1;
+}
+
+
+/*  Default placeholder color for browser  */
+.text-placeholder, .text-placeholder::-webkit-input-placeholder {
+  color: var(--#{$prefix}input-placeholder-color);
+}
+.text-placeholder::-moz-placeholder {
+  color: var(--#{$prefix}input-placeholder-color);
+}
+
+
+
+.small-caps {
+  font-size: 80%;
+  text-transform: uppercase;
+}
+
+.text-prewrap {
+  white-space: pre-wrap;
+}
+
+
+/* Adds additional heading-7 class that matches small font size */
+h7, .h7 {
+  margin-bottom: $headings-margin-bottom;
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+}
+
+/* Adds a heading-bold class and html tag for each heading class */
+h1-bold, h2-bold, h3-bold, h4-bold, h5-bold, h6-bold, h7-bold,
+.h1-bold, .h2-bold, .h3-bold, .h4-bold, .h5-bold, .h6-bold, .h7-bold {
+  margin-bottom: $headings-margin-bottom;
+  font-family: $headings-font-family;
+  font-weight: $headings-bold-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+}
+
+h1-bold, .h1-bold { @include font-size($h1-font-size); }
+h2-bold, .h2-bold { @include font-size($h2-font-size); }
+h3-bold, .h3-bold { @include font-size($h3-font-size); }
+h4-bold, .h4-bold { @include font-size($h4-font-size); }
+h5-bold, .h5-bold { @include font-size($h5-font-size); }
+h6-bold, .h6-bold { @include font-size($h6-font-size); }
+h7, .h7 { @include font-size($h7-font-size); }
+h7-bold, .h7-bold { @include font-size($h7-font-size); }
+
+h1-important, .h1-important { @include font-size($h1-font-size); & { font-weight: $headings-font-weight; } }
+h2-important, .h2-important { @include font-size($h2-font-size); & { font-weight: $headings-font-weight; } }
+h3-important, .h3-important { @include font-size($h3-font-size); & { font-weight: $headings-font-weight; } }
+h4-important, .h4-important { @include font-size($h4-font-size); & { font-weight: $headings-font-weight; } }
+h5-important, .h5-important { @include font-size($h5-font-size); & { font-weight: $headings-font-weight; } }
+h6-important, .h6-important { @include font-size($h6-font-size); & { font-weight: $headings-font-weight; } }
+h7-important, .h7-important { @include font-size($h7-font-size); & { font-weight: $headings-font-weight; } }
+
+
+/* Adds a smaller font class and smaller html tag */
+smaller,
+.smaller {
+  @include font-size($smaller-font-size);
+  font-weight: $font-weight-normal;
+}
+
+.submittal-print-barcode-container {
+  font-family: 'Barcode Font';
+  font-size: 250%;
+}
+
+
+/* Adds Text-Shadow classes for all box-shadows (sm, md, lg, etc)
+    Increases opaqueness for each. */
+@each $key, $value in $box-shadows {
+  .text-#{$key} {
+    text-shadow: darken-shadow($value, .2);
+  }
+}
+@include color-mode(dark) {
+  @each $key, $value in $box-shadows-dark {
+    .text-#{$key} {
+      text-shadow: darken-shadow($value, .2);
+    }
+  }
+}
+
+
+.badge {
+  padding: 0.31em 0.65em 0.39em 0.65em;
+  min-height: 1.25rem;
+  min-width: 1.25rem;
+}
+
+.badge-lg {
+  padding: 0.39em 0.65em 0.39em 0.65em;
+  min-height: 2.125rem;
+  min-width: 2.125rem;
+  font-size: $font-size-lg
+}
+
+/* Adds Small Badge style */
+.badge-sm {
+  padding: 0.21em 0.3em 0.09em 0.3em;
+  min-height: 1rem;
+  min-width: 1rem;
+  font-size: $smaller-font-size;
+  &.badge-query-task {
+    font-size: #{math.div($smaller-font-size, 100%)}rem;
+  }
+  &.season-lg {
+    font-size: $small-font-size;
+    min-height: #{math.div(100%, $small-font-size)+.03}rem;
+    &.badge-query-task {
+      font-size: #{math.div($small-font-size, 100%)}rem;
+    }
+  }
+  &.season-title {
+    padding: 0 0.25em 0 0.25em;
+    font-size: 100%;
+    min-height: 1.03rem;
+  }
+}
+
+
+.no-shadow {
+  box-shadow: none !important;
+  text-shadow: none;
+}
+
+
+.dropdown-item {
+  .dropdown-item-muted {
+    color: var(--bs-secondary-color);
+  }
+  .dropdown-calendar {
+    color: var(--bs-ebizteal);
+  }
+  &.active {
+    .dropdown-item-muted {
+      color: $gray-300;
+    }
+    .dropdown-calendar {
+      color: $white;
+    }
+  }
+}
+@include color-mode(dark) {
+  .dropdown-menu {
+    @extend .dropdown-menu-dark;
+    table thead tr.sticky-top {
+      background: $dropdown-dark-bg;
+    }
+  }
+}
+
+@include color-mode(dark) {
+  //todo unique class here too.
+  .stepper-step {
+    .text-gray-400 {
+      color: var(--bs-gray-800) !important;
+    }
+  }
+}
+
+@include color-mode(dark) {
+  .stepper-stepper {
+    .bg-gray-400 {
+      background-color: var(--bs-gray-800) !important;
+    }
+  }
+}
+
+.tooltip-lg {
+  .tooltip-inner {
+    max-width: 800px !important;
+    width: max-content !important;
+    text-align: left;
+  }
+}
+
+.tooltip-bg-opaque {
+  & .tooltip, &.tooltip {
+    --bs-tooltip-opacity : 1;
+  }
+}
+
+.z-index-1 {
+  // Please use z-1, z-2, z-3, etc in the future. See bootstrap docs.
+  z-index: 1;
+}
+
+.left-modal {
+  position: absolute !important;
+  padding-left: 70px;
+}
+
+.message-list-modal {
+  max-width:50% !important;
+}
+
+.custom-dps-scrollable-modal-window {
+  padding: 0;
+  height: 100%;
+}
+
+.scrollable-modal-hide-before-closing {
+  display: none;
+}
+
+.custom-dps-scrollable-modal-dialog {
+  height: calc(100% - (#{$modal-dialog-margin-y-sm-up} * 2));
+  max-width: fit-content;
+  .modal-content {
+    height: 100%;
+  }
+}
+
+.custom-dps-scrollable-modal-dialog-auto {
+  height: auto;
+  max-width: fit-content;
+  .modal-content {
+    height: auto;
+  }
+}
+
+.notifications-thread-custom-dps-scrollable-modal-dialog {
+  @extend .custom-dps-scrollable-modal-dialog;
+}
+.notifications-thread-custom-dps-scrollable-modal-dialog-auto {
+  @extend .custom-dps-scrollable-modal-dialog-auto;
+  >div>*>div{
+    max-height: calc(100vh - (#{$modal-dialog-margin-y-sm-up} * 2)) !important;
+  }
+}
+
+.non-scrollable-modal-emergency-max-height {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+
+.custom-icon-library-modal-dialog {
+  height: calc(75% - $ebiz-nav-height - #{$modal-dialog-margin-y-sm-up} * 2);
+  margin: 0 map.get($spacers, '12');
+  max-width: fit-content;
+  .modal-content {
+    height: 100%;
+  }
+}
+
+
+.menu-above-modal-backdrop {
+  z-index: 950 !important;
+}
+
+.inset-scroll-shadow {
+  box-shadow: inset 0 1rem 0.25rem -1rem rgba(0, 0, 0, .25), inset 0 -1rem 0.25rem -1rem rgba(0, 0, 0, .25);
+}
+
+.max-container {
+  min-height : 100%;
+  height     : 100%;
+  max-height : 100%;
+  min-width  : 100%;
+  width      : 100%;
+  max-width  : 100%;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.form-control.is-saved {
+  background-size: 3.5625rem 1rem;
+}
+
+table thead tr.sticky-top {
+  box-shadow: $table-header-bottom-border;
+  background: var(--bs-body-bg);
+  @each $shadow, $value in $box-shadows {
+    &.#{$shadow} {
+      box-shadow: $table-header-bottom-border, $value !important;
+    }
+  }
+}
+@include color-mode(dark) {
+  table thead tr.sticky-top {
+    box-shadow: $table-header-bottom-border-dark;
+    @each $shadow, $value in $box-shadows-dark {
+      &.#{$shadow} {
+        box-shadow: $table-header-bottom-border-dark, $value !important;
+      }
+    }
+  }
+}
+
+.table > :not(caption) > * > th {
+  color: inherit;
+}
+table.table-no-bg {
+  --#{$prefix}table-bg: none;
+}
+
+.table > :not(caption) > * > .tooltip {
+  padding: 0;
+}
+
+.accordion {
+  --#{$prefix}accordion-active-bg: inherit;
+
+  &.accordion-width-fixed {
+    min-width  : 1.5rem;
+    max-width  : 1.5rem;
+    width      : 1.5rem;
+    min-height : 2.25rem;
+    max-height : 2.25rem;
+    height     : 2.25rem;
+  }
+}
+
+.highlight {
+  background: color.adjust($warning, $alpha: -0.6);
+}
+@include color-mode(dark) {
+  .highlight {
+    background: color.adjust($warning, $alpha: -0.55);
+  }
+}
+
+.query-task-table-date-icon-size {
+  min-height: 2.25rem ;
+  max-height: 2.25rem ;
+}
+
+
+div.ngb-dp-arrow > button {
+  color: var(--bs-ebizteal);
+}
+
+.ngb-dp-weekdays, .ngb-dp-header {
+  background-color: var(--bs-ebizteal-bg-subtle) !important;
+}
+
+.ngb-dp-weekday {
+  color: var(--bs-ebizteal) !important;
+}
+
+.ngb-dp-month-name {
+  background-color: var(--bs-ebizteal-bg-subtle) !important;
+}
+
+.no-arrow-menu-tooltip {
+  left: -.4rem !important;
+  div.tooltip-arrow {
+    opacity: 0;
+  }
+  div.tooltip-inner {
+    background : var(--bs-dpsblue-border-subtle);
+    color      : var(--bs-dpsblue-text-emphasis);
+    padding    : 1.15rem 1.15rem 1.15rem .3rem;
+    max-width  : none;
+    @extend .h6
+  }
+}
+
+.msg-settings-primary-indent {
+  text-indent: 32px;
+}
+
+.msg-settings-secondary-indent {
+  text-indent: 48px;
+}
+
+.typeahead-force-scroll > ngb-typeahead-window.dropdown-menu {
+  overflow-y: auto;
+  max-height: var(--force-max-height);
+}
+
+.dropdown-menu-body-position-override {
+  top: var(--dropdown-menu-body-position-override-top);
+  left: var(--dropdown-menu-body-position-override-left);
+}
+
+.overflow-gradient {
+  -webkit-mask-image  : linear-gradient(to left, transparent 0, black 12px);
+  mask-image          : linear-gradient(to left, transparent 0, black 12px);
+  -webkit-mask-repeat : no-repeat;
+  mask-repeat         : no-repeat;
+}
+
+.max-width-none {
+  max-width: none;
+}
+.max-height-viewport {
+  max-height: 80vh;
+  >.popover-body {
+    max-height: calc(80vh - 2rem);
+  }
+}
+
+.attachment {
+  width      : 75px;
+  height     : 75px;
+  min-width  : 75px;
+  min-height : 75px;
+  max-width  : 75px;
+  max-height : 75px;
+}
+
+.attachment-lg {
+  width      : 211px;
+  height     : 171px;
+  min-width  : 211px;
+  min-height : 171px;
+  max-width  : 211px;
+  max-height : 171px;
+}
+
+.image-icon {
+  font-size: 50px;
+}
+
+.image-filename {
+  max-width: 70px;
+}
+
+.eedropdown { // for dropdowns that have to be attached to the body
+  top: 14px !important;
+}
+
+.compare-label {
+  top: 3px;
+  position: relative;
+}
+
+.fabric-card-label {
+  width      : 14rem !important;
+  min-width  : 14rem !important;
+  min-height : 2.25rem !important;
+  @include media-breakpoint-down(xl) {
+    width      : 12rem !important;
+    min-width  : 12rem !important;
+    min-height : 2.25rem !important;
+  }
+}
+
+.font-size-reduce {
+  font-size: var(--bs-body-font-size);
+}
+
+.table-opacity {
+  opacity    : 1;
+  transition : opacity .1s ease-in-out;
+
+  &.table-loading {
+    opacity        : .5;
+    transition     : opacity .2s ease-in-out;
+    filter         : blur(6px);
+    -webkit-filter : blur(6px);
+  }
+}
+
+.typeahead-error {
+  ngb-typeahead-window:before {
+    padding-left     : 1rem;
+    pointer-events   : none;
+    background-color : var(--#{$prefix}body-bg);
+    color            : var(--#{$prefix}form-invalid-color);
+    font-size        : $smaller-font-size;
+    font-style       : italic;
+  }
+}
+
+//Separated from typeahead-error for future errors.
+.category-required {
+  ngb-typeahead-window:before {
+    content: "search requires a category.";
+  }
+}
+
+.cdk-overlay-container {
+  position       : relative;
+  height         : 100vh;
+  width          : 100vw;
+  pointer-events : none;
+
+  & .cdk-overlay-connected-position-bounding-box {
+    position : absolute;
+    display  : flex;
+
+    & .cdk-overlay-pane {
+      position       : absolute;
+      pointer-events : auto;
+      box-sizing     : border-box;
+      display        : flex;
+      max-width      : 100%;
+      max-height     : 100%;
+    }
+  }
+}
+
+.style-threads-modal-dialog {
+  &.modal-dialog-centered {
+    min-height : calc(100vh - 8%);
+  }
+
+  --bs-modal-width : calc(100vw - 25%);
+  height           : calc(100vh - 8%);
+  width            : calc(100vw - 25%) !important;
+
+  .modal-content {
+    height: 100%;
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 25%) !important;
+  }
+}
+
+.color-type-or-plan-color-container {
+  border-radius : $input-border-radius;
+
+  &.focus, &:focus {
+    border-color : $input-focus-border-color;
+    box-shadow   : $input-focus-box-shadow;
+    transition   : border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    &.invalid {
+      border-color : map.get(map.get($form-validation-states, "invalid"), "border-color");
+      box-shadow   : map.get(map.get($form-validation-states, "invalid"), "focus-box-shadow");
+    }
+  }
+
+  &.invalid {
+    & .new-plan-color-empty {
+      border     : 1px solid map.get(map.get($form-validation-states, "invalid"), "border-color");
+      background : linear-gradient(to top left,
+        var(--bs-body-bg) 0%,
+        var(--bs-body-bg) calc(50% - 0.8px),
+        map.get(map.get($form-validation-states, "invalid"), "color") 50%,
+        var(--bs-body-bg) calc(50% + 0.8px),
+        var(--bs-body-bg) 100%
+      );
+    }
+  }
+
+  & .new-plan-color-empty {
+    border     : 1px solid var(--bs-secondary);
+    background : linear-gradient(to top left,
+      var(--bs-body-bg) 0%,
+      var(--bs-body-bg) calc(50% - 0.8px),
+      var(--bs-secondary) 50%,
+      var(--bs-body-bg) calc(50% + 0.8px),
+      var(--bs-body-bg) 100%
+    );
+  }
+}
+

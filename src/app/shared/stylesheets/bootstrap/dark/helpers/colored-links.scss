@@ -1,0 +1,27 @@
+@use 'sass:map';
+
+@include color-mode(dark) {
+  $theme-colors-dark: (
+    "dpsblue":            map.get($dpsblue-dark-palette, "dpsblue"),
+    "dpsblue-light":      $dpsblue-light-dark,
+    "dpsblue-400":        map.get($dpsblue-dark-palette, "dpsblue-400"),
+    "dpsblue-350":        map.get($dpsblue-dark-palette, "dpsblue-350"),
+    "dpsgreen":           map.get($dpsgreen-dark-palette, "dpsgreen"),
+    "darknlight":         $darknlight-dark
+  );
+  @each $color, $value in $theme-colors-dark {
+    .link-#{$color} {
+      color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+      text-decoration-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+
+      @if $link-shade-percentage != 0 {
+        &:hover,
+        &:focus {
+          $hover-color: if(color-contrast($value) == $color-contrast-light, shade-color($value, $link-shade-percentage), tint-color($value, $link-shade-percentage));
+          color: RGBA(#{to-rgb($hover-color)}, var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+          text-decoration-color: RGBA(to-rgb($hover-color), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+        }
+      }
+    }
+  }
+}

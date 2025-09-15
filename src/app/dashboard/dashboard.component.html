@@ -1,0 +1,62 @@
+@if (dashboardViewService.loadingDashboard$ | async) {
+  <div class="spinner-container">
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <dps-spinner [spinnerSize]="140"/>
+    </div>
+  </div>
+} @else {
+  <div class="max-container" [ngClass]="{'no-select' : viewAdjust}">
+    @for (row of modules; track row; let i = $index; let isFirstRow = $first) {
+      @for (module of row; track module; let j = $index; let isFirstCol = $first) {
+        <div class="module-drop-zone position-absolute"
+             [dpsModuleDroppable]="getDroppableZone(module)"
+             [style.width.%]="module.data.width$.value + (isDragging && row.length < 2 ? -10 : 0)"
+             [style.height.%]="module.data.height$.value + (isDragging && !modules[isFirstRow ? 1 : 0].length ? -10 : 0)"
+             [style.top.%]="module.data.top$.value + (isDragging && !modules[isFirstRow ? 1 : 0].length ? isFirstRow ? 0 : 10 : 0)"
+             [style.left.%]="module.data.left$.value + (isDragging && row.length < 2 ? module.data.rowColumn % 2 ? 0 : 10 : 0)"
+             (dpsOnDroppableComplete)="onZoneDrop($event)">
+          <!--   Resize handles   -->
+          @if (viewAdjust) {
+            @if (row.length > 1 && module.data.rowColumn % 2) {
+              <div [dpsModuleResize]="module"
+                   [isResizeMode$]="viewAdjust$"
+                   [axis]="'x'"
+                   [disabled]="row[0].data.minWidth + row[1].data.minWidth > 1"
+                   (dpsOnResize)="onResize($event)"></div>
+            }
+            @if ((modules[1][0] || modules[1][1]) && module.data.rowColumn < 20) {
+              <div [dpsModuleResize]="module"
+                   [isResizeMode$]="viewAdjust$"
+                   [axis]="'y'"
+                   (dpsOnResize)="onResize($event)"></div>
+            }
+          }
+          <!--   Ngx adds dynamic component   -->
+          <ng-container *ngComponentOutlet="module.data.component; inputs: { module: module }"/>
+        </div>
+        @if (viewAdjust && row.length < 2 && modules.flat().length > 1) {
+          <div class="module-drop-zone position-absolute"
+               [dpsModuleDroppable]="getExtraColumnDropZone(module.data.rowColumn)"
+               [style.width.%]="!isDragging ? 0 : (10 - dashboardViewService.widthGapPercentage)"
+               [style.height.%]="module.data.height$.value + (!modules[isFirstRow ? 1 : 0].length ? -10 : 0)"
+               [style.top.%]="module.data.top$.value + (!modules[isFirstRow ? 1 : 0].length ? isFirstRow ? 0 : -10 : 0)"
+               [style.left.%]="module.data.rowColumn % 2 ? module.data.width$.value + dashboardViewService.widthGapPercentage * 2 - (!isDragging ? 0 : 10) : dashboardViewService.widthGapPercentage"
+               (dpsOnDroppableComplete)="onZoneDrop($event)">
+            <dps-drop-rearrange-placeholder/>
+          </div>
+        }
+        @if (viewAdjust && !modules[isFirstRow ? 1 : 0].length && modules.flat().length > 1) {
+          <div class="module-drop-zone position-absolute"
+               [dpsModuleDroppable]="getExtraRowDropZone(module.data.rowColumn)"
+               [style.width.%]="module.data.width$.value + (row.length < 2 ? -10 : 0)"
+               [style.height.%]="!isDragging ? 0 : (10 - dashboardViewService.heightGapPercentage)"
+               [style.top.%]="isFirstRow ? (module.data.height$.value + dashboardViewService.heightGapPercentage * 2 - (!isDragging ? 0 : 10)) : dashboardViewService.heightGapPercentage"
+               [style.left.%]="module.data.left$.value + (row.length < 2 ? isFirstCol ? 0 : -10 : 0)"
+               (dpsOnDroppableComplete)="onZoneDrop($event)">
+            <dps-drop-rearrange-placeholder/>
+          </div>
+        }
+      }
+    }
+  </div>
+}

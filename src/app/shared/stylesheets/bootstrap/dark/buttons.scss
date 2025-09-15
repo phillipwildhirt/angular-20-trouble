@@ -1,0 +1,23 @@
+@use 'sass:map';
+
+@include color-mode(dark) {
+  $theme-colors-dark: (
+    "dpsblue":            map.get($dpsblue-dark-palette, "dpsblue"),
+    "dpsblue-light":      $dpsblue-light-dark,
+    "dpsblue-400":        map.get($dpsblue-dark-palette, "dpsblue-400"),
+    "dpsblue-350":        map.get($dpsblue-dark-palette, "dpsblue-350"),
+    "dpsgreen":           map.get($dpsgreen-dark-palette, "dpsgreen"),
+    "danger":             $danger-dark,
+    "darknlight":         $darknlight-dark
+  );
+  @each $color, $value in $theme-colors-dark {
+    .btn-#{$color} {
+      @include button-variant($value, $value);
+    }
+  }
+  @each $color, $value in $theme-colors-dark {
+    .btn-outline-#{$color} {
+      @include button-outline-variant($value);
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div [dpsModuleDraggable]="module"
+     [moduleViewService]="dashboardViewService"
+     [isDraggableMode$]="viewAdjust$"
+     class="w-100 h-100">
+  <div id="drag-image-placeholder"></div>
+  <div class="bg-body shadow-sm p-4 flex-start flex-column align-items-stretch w-100 h-100">
+    <div class="mb-3">
+      <div class="flex-between">
+        <div class="flex-start align-items-center"
+             [ngClass]="{'clickable' : collapsed || expanded}"
+             (click)="onCollapse()">
+          <div class="icon-6 text-dpsblue me-4">
+            <i class="bi bi-journal-bookmark"></i>
+          </div>
+          <div class="flex-start align-items-end">
+            <h6 class="me-2 text-dpsblue">Notes</h6>
+            <dps-notification-pill [styleTag]="'danger'" [size]="'lg'" [value]="'67'" />
+          </div>
+        </div>
+        <!--        if Empty should allow entire banner to expand module-->
+        <div class="flex-grow-1" (click)="onCollapse()" [ngClass]="{'clickable' : collapsed || expanded}">
+          <!--middle area-->
+        </div>
+        <div class="flex-start align-items-center">
+          <dps-button-icon [icon]="expanded ? 'bi-arrows-angle-contract' : 'bi-arrows-angle-expand'"
+                           [color]="'ebizteal'"
+                           [size]="'sm'"
+                           (click)="onExpandCollapse()"
+                           class="me-5" />
+          <dps-button-icon [icon]="'bi-gear-fill'" [color]="'dpsblue-light'" [size]="'sm'"/>
+        </div>
+      </div>
+    </div>
+    @if (!collapsed) {
+      <div [@showHide]="">
+        Example Module Body
+      </div>
+    }
+  </div>
+</div>

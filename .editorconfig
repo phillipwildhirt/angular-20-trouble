@@ -1,0 +1,21 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+indent_size = 2
+charset = utf-8
+indent_style = space
+max_line_length = 180
+insert_final_newline = true
+trim_trailing_whitespace = true
+ij_any_call_parameters_new_line_after_left_paren = false
+ij_any_call_parameters_right_paren_on_new_line = false
+ij_any_method_parameters_new_line_after_left_paren = false
+ij_any_method_parameters_right_paren_on_new_line = false
+
+[*.ts]
+quote_type = single
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false

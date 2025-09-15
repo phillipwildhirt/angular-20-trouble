@@ -1,0 +1,13 @@
+@import 'src/app/dps-side-nav/dps-side-nav.variables';
+@import 'src/variables';
+
+.window-custom {
+  position: fixed;
+  top: $ebiz-nav-height;
+  left: $menu-closed-width;
+  height: calc(100vh - $ebiz-nav-height);
+  min-width: calc(100vw - #{$menu-closed-width});
+  max-width: calc(100vw - #{$menu-closed-width});
+  overflow-x: hidden;
+  background: var(--bs-tertiary-bg);
+}

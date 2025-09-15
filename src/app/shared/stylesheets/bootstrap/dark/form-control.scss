@@ -1,0 +1,9 @@
+:root {
+  --#{$prefix}input-placeholder-color: #{$input-placeholder-color};
+  .form-control::placeholder {
+    color: var(--#{$prefix}input-placeholder-color);
+  }
+  @include color-mode(dark) {
+    --#{$prefix}input-placeholder-color: #{$input-placeholder-color-dark};
+  }
+}

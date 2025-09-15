@@ -1,0 +1,18 @@
+@use 'sass:map';
+
+@include color-mode(dark) {
+  $theme-colors-dark: (
+    "dpsblue":            map.get($dpsblue-dark-palette, "dpsblue"),
+    "dpsblue-light":      $dpsblue-light-dark,
+    "dpsblue-400":        map.get($dpsblue-dark-palette, "dpsblue-400"),
+    "dpsblue-350":        map.get($dpsblue-dark-palette, "dpsblue-350"),
+    "dpsgreen":           map.get($dpsgreen-dark-palette, "dpsgreen"),
+    "darknlight":         $darknlight-dark
+  );
+  @each $color, $value in $theme-colors-dark {
+    .text-bg-#{$color} {
+      color: color-contrast($value) if($enable-important-utilities, !important, null);
+      background-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+    }
+  }
+}

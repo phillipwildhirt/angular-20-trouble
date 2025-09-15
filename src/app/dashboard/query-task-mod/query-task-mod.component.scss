@@ -1,0 +1,63 @@
+@import "src/variables";
+
+$drop-spacer-padding: 0.75rem;
+
+.dropzone {
+  width: 100%;
+  &.dragging {
+    width: calc(100% + (#{$drop-spacer-padding} * 2.1));
+    //width: 94%;
+  }
+  > .dropSpacer {
+    padding: $drop-spacer-padding;
+  }
+}
+
+.dps-tab {
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -ms-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+  &:hover {
+    background-color: rgba(var(--bs-ebizteal-rgb),.12);
+    box-shadow: var(--#{$prefix}box-shadow-sm);
+  }
+}
+
+.dndDragging {
+  opacity: .8;
+}
+
+.search-help-tooltip-container {
+  padding: 6px;
+}
+
+.size-0 {
+  height: 0;
+  width: 0;
+}
+
+.fade-box-start {
+  background: linear-gradient(90deg, var(--bs-tertiary-bg), transparent); //ebizteal-200
+  min-width: 36px;
+  z-index: 1;
+  pointer-events: none;
+}
+.fade-box-end {
+  background: linear-gradient(270deg, var(--bs-tertiary-bg), transparent); //ebizteal-200
+  min-width: 36px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.arrow-box {
+  background-color: var(--bs-tertiary-bg);
+  opacity: 1;
+  min-width: 24px;
+  min-height: 36px;
+}
+
+.animate-tabs {
+  transition: transform 200ms ease-out;
+}

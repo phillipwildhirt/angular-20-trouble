@@ -1,0 +1,110 @@
+@function switch-circle($color, $opacity: 1, $rgb: null, $rgb-opacity: 1) {
+  $closing: '';
+  @if ($rgb == rgb) {
+    $rgb: 'rgb(';
+    $closing: ')';
+  }
+  @return url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$rgb}#{$color}#{$closing}' opacity='#{$opacity}'/></svg>");
+}
+@function switch-off($color, $opacity: 1) {
+  @return url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20'><path fill='#{$color}' opacity='#{$opacity}' d='M24.74 10.11c0 1.31-.25 2.31-.73 3.02s-1.19 1.05-2.1 1.05-1.62-.35-2.11-1.05c-.49-.7-.73-1.71-.73-3.03s.25-2.31.73-3.01 1.2-1.05 2.12-1.05 1.61.35 2.1 1.05.73 1.7.73 3.01Zm-4.17 0c0 .9.11 1.59.34 2.06s.56.71 1 .71c.89 0 1.33-.92 1.33-2.77s-.44-2.77-1.32-2.77c-.45 0-.78.24-1.01.71s-.34 1.16-.34 2.06Zm6.78 3.97h-1.46v-7.9h3.54v1.27h-2.08v2.19h1.94v1.27h-1.94v3.17Zm4.53 0h-1.46v-7.9h3.54v1.27h-2.08v2.19h1.94v1.27h-1.94v3.17Z'/></svg>");
+}
+@function switch-on($color, $opacity: 1, $rgb: null, $rgb-opacity: 1) {
+  $closing: '';
+  @if ($rgb == rgb) {
+    $rgb: 'rgb(';
+    $closing: ')';
+  }
+  @if ($rgb == rgba) {
+    $rgb: 'rgba(';
+    $closing: ', #{$rgb-opacity})';
+  }
+  @return url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20'><path fill='#{$rgb}#{$color}#{$closing}' opacity='#{$opacity}' d='M8.21 10.12c0 1.27-.24 2.26-.72 2.94s-1.16 1.03-2.05 1.03-1.58-.34-2.06-1.03-.72-1.67-.72-2.95.24-2.25.72-2.93S4.55 6.16 5.45 6.16s1.57.34 2.04 1.03.71 1.66.71 2.94Zm-4.08 0c0 .88.11 1.55.33 2.01.22.46.55.69.97.69.86 0 1.3-.9 1.3-2.7s-.43-2.7-1.29-2.7c-.44 0-.76.23-.99.69s-.33 1.13-.33 2.01Zm10.6 3.87H12.98L10.6 8.41c.02.43.06.88.06 1.37v4.21H9.33V6.28h1.76l2.36 5.52h.06c-.07-.37-.1-.81-.1-1.32V6.27h1.32v7.71Z'/></svg>");
+}
+
+.form-switch {
+  position: relative;
+  z-index: 0;
+
+  & .form-check-input {
+    position: relative;
+    background-color: unset;
+
+    &:disabled {
+      opacity: 1;
+
+      &:not(.fake-enable) {
+        --bs-border-color-rgb: #{to-rgb($border-color)};
+        border: var(--bs-border-width) solid rgba(var(--bs-border-color-rgb), .5);
+        background-image: switch-circle($form-switch-color, 0.5);
+
+        &::before {
+          background-image: switch-off($form-switch-color, 0.4);
+        }
+      }
+    }
+
+    &::before, &::after {
+      position: absolute;
+      content: " ";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: $form-switch-border-radius;
+    }
+
+    &::before {
+      z-index: -1;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: switch-off($form-switch-color, 0.8);
+    }
+
+    &::after {
+      z-index: -2;
+      background-color: var(--bs-body-bg);
+    }
+
+    &:checked {
+      &:disabled:not(.fake-enable) {
+        --bs-border-color-rgb: #{to-rgb($component-active-bg)};
+        background-image: switch-circle(to-rgb($form-switch-checked-color), 0.5, rgb);
+        &::before {
+          background-color: transparentize($component-active-bg, .5);
+          background-image: switch-on(to-rgb($form-switch-checked-color), 0.5, rgba, .7);
+        }
+      }
+      &::before {
+        z-index: -1;
+        background-color: $component-active-bg;
+        background-image: switch-on(to-rgb($form-switch-checked-color), 1, rgba, .7);
+      }
+    }
+  }
+}
+@include color-mode(dark) {
+  .form-switch .form-check-input {
+    &:disabled:not(.fake-enable) {
+      --bs-border-color-rgb: #{to-rgb($border-color-dark)};
+      background-image: switch-circle($form-switch-color-dark, 0.5);
+      &::before {
+        background-image: switch-off($form-switch-color-dark, 0.4);
+      }
+    }
+    &::before {
+      background-image: switch-off($form-switch-color-dark, 0.8);
+    }
+    &:checked {
+      &:disabled:not(.fake-enable) {
+        --bs-border-color-rgb: #{to-rgb($component-active-bg)};
+        &::before {
+          background-image: switch-on(to-rgb($form-switch-checked-color), 0.5, rgba, .7);
+        }
+      }
+      &::before {
+        background-image: switch-on(to-rgb($form-switch-checked-color), 1, rgba, .7);
+      }
+    }
+  }
+}

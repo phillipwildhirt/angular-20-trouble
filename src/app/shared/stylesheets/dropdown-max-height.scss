@@ -1,0 +1,22 @@
+@use 'sass:math';
+@import 'src/variables';
+
+@mixin dropdown-max-height(
+  $anchor-height: $input-height,
+  $max-screen-height: 1600,
+  $screen-step: 50,
+  $padding: 0.5rem,
+  ) {
+  $total-steps: math.div($max-screen-height, $screen-step);
+  @for $screen from 1 to $total-steps {
+    $screen-location: $screen * $screen-step;
+    &.screen-#{$screen-location} {
+      max-height : max(100vh - #{math.div($anchor-height, 2)} - #{($screen-location + $screen-step) + 'px'} - $padding, #{$screen-location + 'px'} - 66px - #{math.div($anchor-height, 2)} - $padding)
+    }
+  }
+}
+
+ngb-typeahead-window.dropdown-menu.screen-position-overflow {
+  @include dropdown-max-height();
+  overflow-y : auto;
+}

@@ -1,0 +1,40 @@
+@use 'sass:string';
+@use 'sass:map';
+@use 'src/app/shared/stylesheets/bootstrap/color-mode';
+@use 'src/app/shared/stylesheets/str-last-index.function' as str;
+
+@function reverse-color($palette, $color) {
+  $last-hyphen: str.str-last-index($color, '-');
+  $value: '600';
+  @if $last-hyphen and $last-hyphen > 3 {
+    $value: string.slice($color, $last-hyphen + 1);
+  } @else {
+    @return lighten(map.get($palette, $color), 5%);
+  }
+  $list: map.keys($quill-color-levels);
+  $index: index($list, $value);
+  $reversed-value: '400';
+  @if $index {
+    $reversed-index: length($list) - $index + 1;
+    $reversed-value: nth($list, $reversed-index)
+  } @else {
+    @error 'No index was found in nt-colors'
+  }
+  @return map.get($palette, '#{string.slice($color, 0, $last-hyphen - 1)}-#{$reversed-value}');
+}
+:root {
+@each $palette, $palette-map in $ql-colors {
+  @each $color, $value in $palette-map {
+      --#{$color}: #{$value};
+    }
+  }
+}
+:root {
+  @include color-mode(dark) {
+    @each $palette, $palette-map in $ql-colors {
+      @each $color, $value in $palette-map {
+        --#{$color}: #{reverse-color($palette-map, $color)};
+      }
+    }
+  }
+}

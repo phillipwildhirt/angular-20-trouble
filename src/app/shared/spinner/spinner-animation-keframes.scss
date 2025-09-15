@@ -1,0 +1,122 @@
+@use 'sass:math';
+@import './spinner-animation-time';
+
+$no-of-animated: 56;
+
+.lds-ring-2 div:nth-child(1) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 1) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(2) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 2) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(3) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 3) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(4) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 4) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(5) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 5) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(6) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 6) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(7) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 7) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(8) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 8) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(9) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 9) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(10) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 10) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(11) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 11) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(12) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 12) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(13) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 13) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(14) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 14) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(15) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 15) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(16) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 16) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(17) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 17) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(18) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 18) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(19) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 19) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(20) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 20) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(21) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 21) - $animation-time;
+}
+
+.lds-ring-2 div:nth-child(22) {
+  animation-delay: (math.div($animation-time, $no-of-animated) * 22) - $animation-time;
+}
+
+@keyframes lds-ring-div-2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  80% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lds-ring-rotate-2 {
+  0% {
+    transform: rotate(-70deg);
+  }
+  50% {
+    transform: rotate(180-70deg);
+  }
+  100% {
+    transform: rotate(360-70deg);
+  }
+}

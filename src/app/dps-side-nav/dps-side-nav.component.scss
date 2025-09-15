@@ -1,0 +1,16 @@
+@use "sass:math";
+@use 'sass:map';
+@import 'src/variables';
+@import './dps-side-nav.variables';
+
+.dps-nav {
+  position: fixed;
+  top: $ebiz-nav-height;
+  left: 0;
+  height: calc(100vh - $ebiz-nav-height);
+  max-height: 100vh;
+  min-height: 0;
+  background: var(--bs-dpsblue-400-bg-subtle);
+  z-index: 1000;
+  user-select: none;
+}

@@ -1,0 +1,15 @@
+@import 'src/variables';
+@import 'src/app/shared/stylesheets/str-replace.function';
+@import './spinner-animation-time';
+
+$spinner-color:          $danger;
+$spinner-success-color:  $danger;
+
+
+/* end customizable variables */
+
+
+$spinner-success-color-quote: str-replace(#{$spinner-success-color}, '#', '%23');
+$spinner-color-quote: str-replace(#{$spinner-color}, '#', '%23');
+
+@import './spinner';

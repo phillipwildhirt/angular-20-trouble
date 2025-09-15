@@ -1,0 +1,64 @@
+<div [dpsModuleDraggable]="module"
+     [moduleViewService]="dashboardViewService"
+     [isDraggableMode$]="viewAdjust$"
+     class="w-100 h-100 position-relative">
+  <div id="drag-image-placeholder"></div>
+  <div class="flex-start flex-column flex-fill w-100 h-100">
+    <div class="flex-start align-items-stretch">
+      <div #scrollableArea class="position-relative flex-start align-items-stretch flex-grow-1 overflow-hidden" (wheel)="mouseWheel($event)">
+        @if (showLeftArrow) {
+          <div class="position-absolute top-0 start-0 overflow-visible size-0 z-index-1">
+            <div class="flex-start align-items-stretch">
+              <div class="position-relative arrow-box bg-body-tertiary" (mousedown)="leftDown()" (mouseup)="mouseUp()" (mouseleave)="mouseUp()" (dragover)="leftDown()">
+                <i class="position-absolute top-50 start-50 translate-middle bi bi-chevron-left text-dpsblue"></i>
+              </div>
+              <div class="fade-box-start"></div>
+            </div>
+          </div>
+        }
+        <div class="flex-between">
+          <div class="flex-start animate-tabs dropzone"
+               #tabRowElementRef
+               [style.transform]="'translateX(' + tabScrollValue + 'px)'"
+               id="queryTaskTabs">
+            <div class="dropSpacer" dndPlaceholderRef></div>
+            @for (item of Array(9).keys(); track $index) {
+              <div class="flex-column dps-tab">
+                <dps-module-tab [id]="'qt' + $index"
+                                title="Blah"
+                                [state]="'inactive'"
+                                [subText]="false"
+                                [dismissible]="true"
+                                [tooltipPlacementOptions]="['bottom', 'bottom-start', 'bottom-left', 'bottom-end', 'bottom-right', 'start', 'left', 'start-bottom', 'left-bottom', 'end', 'right', 'end-bottom', 'right-bottom']"
+                                tooltipWindowClass="mod-tab-tooltip-window"
+                                applyBackground="false"/>
+              </div>
+            }
+          </div>
+        </div>
+        @if (showRightArrow) {
+          <div class="position-absolute top-0 start-100 overflow-visible size-0 z-index-1">
+            <div class="flex-end align-items-stretch">
+              <div class="fade-box-end"></div>
+              <div class="position-relative arrow-box bg-body-tertiary" (mousedown)="rightDown()" (mouseup)="mouseUp()" (mouseleave)="mouseUp()" (dragover)="rightDown()">
+                <i class="position-absolute top-50 start-50 translate-middle bi bi-chevron-right text-dpsblue"></i>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="flex-end align-items-end" [style.margin-left.px]="4">
+        <!-- +New Task/Query-->
+        <dps-button-icon id="openNewButton" icon="bi-plus" color="ebizteal" size="lg" tooltip="Open New"/>
+        <!--+New Task/Query-->
+        <dps-button-icon icon="bi-gear-fill" color="dpsblue-light" size="sm"/>
+      </div>
+    </div>
+    <div class="p-4 flex-start flex-column bg-body shadow-sm flex-fill overflow-auto position-relative">
+      @if (!collapsed) {
+        <div [@showHide]="" class="mb-3">
+        </div>
+      }
+    </div>
+  </div>
+</div>

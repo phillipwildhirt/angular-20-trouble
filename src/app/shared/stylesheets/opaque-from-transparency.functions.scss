@@ -1,0 +1,11 @@
+@use 'sass:color';
+
+@function opaque-from-transparency($bg, $color) {
+  $alpha: color.alpha($color);
+
+  @return rgb(
+      (1 - $alpha) * color.red($bg) + $alpha * color.red($color),
+      (1 - $alpha) * color.green($bg) + $alpha * color.green($color),
+      (1 - $alpha) * color.blue($bg) + $alpha * color.blue($color),
+  );
+}

@@ -1,0 +1,73 @@
+@import 'src/variables';
+@import 'src/maps';
+@import 'bootstrap/scss/mixins/_border-radius';
+
+/* transparent background and border properties included for button version.
+    iOS requires the button element instead of an anchor tag.
+    If you want the anchor version, it requires `href="#"`.
+    See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+ */
+
+$btn-pill-close-width:            .625rem;
+$btn-pill-close-height:           $btn-pill-close-width;
+$btn-pill-close-padding-x:        .125em;
+$btn-pill-close-padding-y:        $btn-pill-close-padding-x;
+$btn-pill-close-color:            $black;
+$btn-pill-close-bg:               url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none'><path d='M1.668 1.648L8.320 8.307M1.668 8.307L8.320 1.648' stroke='#{$btn-pill-close-color}' stroke-width='2' stroke-linecap='round'/></svg>");
+$btn-pill-close-focus-shadow:     $input-btn-focus-box-shadow;
+$btn-pill-close-opacity:          .75;
+$btn-pill-close-hover-opacity:    1;
+$btn-pill-close-focus-opacity:    1;
+$btn-pill-close-disabled-opacity: .25;
+$btn-pill-close-white-filter:     invert(1) grayscale(100%) brightness(200%);
+$btn-pill-close-subtle-filter:    invert(52%) sepia(55%) saturate(351%) hue-rotate(191deg) brightness(84%) contrast(89%);
+$btn-pill-close-dpsgreen-filter:  invert(82%) sepia(11%) saturate(1508%) hue-rotate(78deg) brightness(85%) contrast(77%);
+$btn-pill-close-ebizteal-filter:  brightness(0) saturate(100%) invert(56%) sepia(36%) saturate(569%) hue-rotate(148deg) brightness(86%) contrast(87%);
+
+.btn-pill-close {
+  box-sizing: content-box;
+  width: $btn-pill-close-width;
+  height: $btn-pill-close-height;
+  padding: $btn-pill-close-padding-y $btn-pill-close-padding-x;
+  color: $btn-pill-close-color;
+  background: transparent escape-svg($btn-pill-close-bg) center / $btn-pill-close-width auto no-repeat; // include transparent for button elements
+  border: 0; // for button elements
+  @include border-radius();
+  opacity: $btn-pill-close-opacity;
+
+  // Override <a>'s hover style
+  &:hover, &.hover {
+    color: $btn-pill-close-color;
+    text-decoration: none;
+    opacity: $btn-pill-close-hover-opacity;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: $btn-pill-close-focus-shadow;
+    opacity: $btn-pill-close-focus-opacity;
+  }
+
+  &:disabled,
+  &.disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: $btn-pill-close-disabled-opacity;
+  }
+}
+
+.btn-pill-close-white {
+  filter: $btn-pill-close-white-filter;
+}
+
+.btn-pill-close-subtle {
+  filter: $btn-pill-close-subtle-filter;
+}
+
+.btn-pill-close-dpsgreen {
+  filter: $btn-pill-close-dpsgreen-filter;
+}
+
+.btn-pill-close-ebizteal {
+  filter: $btn-pill-close-ebizteal-filter;
+}

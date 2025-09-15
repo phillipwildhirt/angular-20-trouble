@@ -1,0 +1,76 @@
+@import 'src/app/dps-side-nav/dps-side-nav.variables';
+
+div.module-drop-zone {
+  transition: height 300ms ease-out, width 300ms ease-out, top 300ms ease-out, left 300ms ease-out;
+}
+
+.dps-droppable{
+  position: relative;
+}
+
+.dps-droppable:after {
+  content: '';
+  display: block;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.dps-draggable{
+  background-color: var(--bs-body-bg);
+  cursor: pointer;
+  box-shadow: 0 .75rem 3rem rgba(0, 0, 0, .175);
+}
+
+.view-edit-controls {
+  pointer-events: none;
+  z-index: 1005;
+
+  > * {
+    pointer-events: auto;
+  }
+
+  .extra-shadow-dummy-div {
+    z-index: -1;
+  }
+}
+
+.js-dps-droppable--delete--target:after,
+.js-dps-droppable--target:after,
+.js-dps-droppable--delete--zone:after,
+.js-dps-droppable--zone:after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-width: 2px;
+  border-style: dashed;
+}
+
+.js-dps-droppable--target:after{
+  border-color: var(--bs-primary-border-subtle);
+  background-color: rgba(var(--bs-primary-bg-subtle-rgb), 0.5);
+  z-index: 1004;
+}
+.js-dps-droppable--delete--target:after{
+  border-color: var(--bs-danger-border-subtle);
+  background-color: transparent;
+  z-index: 1006;
+}
+
+.js-dps-droppable--zone:after{
+  border-color: var(--bs-dpsgreen-border-subtle);
+  background-color: rgba(var(--bs-dpsgreen-bg-subtle-rgb), 0.5);
+  z-index: 1004;
+}
+.js-dps-droppable--delete--zone:after{
+  border-color: var(--bs-danger-border-subtle);
+  background-color: rgba(var(--bs-danger-bg-subtle-rgb), 0.5);
+  z-index: 1006;
+}
+
+spinner-container {
+  min-height: calc(100% - $ebiz-nav-height);
+  width: calc(100% - $menu-closed-width);
+  position: relative;
+}

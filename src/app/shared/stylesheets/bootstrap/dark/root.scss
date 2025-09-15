@@ -1,0 +1,99 @@
+@use 'sass:map';
+@import 'src/app/shared/stylesheets/bootstrap/dark/nt-colors.css-vars';
+@import 'src/app/shared/stylesheets/bootstrap/dark/ql-colors.css-vars';
+
+
+@include color-mode() {
+  $theme-colors-text: map-loop($theme-colors-text, to-rgb, "$value");
+  @each $color, $value in $theme-colors-text {
+    --#{$prefix}#{$color}-text-emphasis-rgb: #{$value};
+  }
+  $theme-colors-bg-subtle: map-loop($theme-colors-bg-subtle, to-rgb, "$value");
+  @each $color, $value in $theme-colors-bg-subtle {
+    --#{$prefix}#{$color}-bg-subtle-rgb: #{$value};
+  }
+  $theme-colors-border-subtle: map-loop($theme-colors-border-subtle, to-rgb, "$value");
+  @each $color, $value in $theme-colors-border-subtle {
+    --#{$prefix}#{$color}-border-subtle-rgb: #{$value};
+  }
+
+  @each $shadow, $value in $box-shadows {
+    --#{$prefix}box-#{$shadow}: #{$value};
+    .#{$shadow} {
+      box-shadow: var(--#{$prefix}box-#{$shadow}) !important;
+    }
+  }
+  @each $shadow, $value in $box-shadows-rgba {
+    --#{$prefix}box-#{$shadow}-rgba: #{$value};
+  }
+
+  --#{$prefix}form-icon-valid-color: #{$form-feedback-icon-valid-color};
+  --#{$prefix}form-icon-invalid-color: #{$form-feedback-icon-invalid-color};
+
+  --#{$prefix}form-icon-valid-color-rgb: #{to-rgb($form-feedback-icon-valid-color)};
+  --#{$prefix}form-icon-invalid-color-rgb: #{to-rgb($form-feedback-icon-invalid-color)};
+
+  --#{$prefix}form-valid-color-rgb: #{to-rgb($form-valid-color)};
+  --#{$prefix}form-invalid-color-rgb: #{to-rgb($form-invalid-color)};
+}
+
+@include color-mode(dark) {
+  $dpsblue          : $dpsblue-dark;
+  $dpsblue-light    : $dpsblue-light-dark;
+  $dpsblue-palette  : $dpsblue-dark-palette;
+  $dpsgreen         : $dpsgreen-dark;
+  $dpsgreen-palette : $dpsgreen-dark-palette;
+  $darknlight       : $darknlight-dark;
+  $danger           : $danger-dark;
+  $theme-colors     : (
+    "dpsblue":            map.get($dpsblue-dark-palette, "dpsblue"),
+    "dpsblue-light":      $dpsblue-light-dark,
+    "dpsblue-400":        map.get($dpsblue-dark-palette, "dpsblue-400"),
+    "dpsblue-350":        map.get($dpsblue-dark-palette, "dpsblue-350"),
+    "dpsgreen":           map.get($dpsgreen-dark-palette, "dpsgreen"),
+    "danger":             $danger-dark,
+    "darknlight":         $darknlight-dark
+  );
+  $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+  @each $color, $value in $theme-colors {
+    --#{$prefix}#{$color}: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  $theme-colors-text-dark: map-loop($theme-colors-text-dark, to-rgb, "$value");
+  @each $color, $value in $theme-colors-text-dark {
+    --#{$prefix}#{$color}-text-emphasis-rgb: #{$value};
+  }
+  $theme-colors-bg-subtle-dark: map-loop($theme-colors-bg-subtle-dark, to-rgb, "$value");
+  @each $color, $value in $theme-colors-bg-subtle-dark {
+    --#{$prefix}#{$color}-bg-subtle-rgb: #{$value};
+  }
+  $theme-colors-border-subtle-dark: map-loop($theme-colors-border-subtle-dark, to-rgb, "$value");
+  @each $color, $value in $theme-colors-border-subtle-dark {
+    --#{$prefix}#{$color}-border-subtle-rgb: #{$value};
+  }
+
+  @each $shadow, $value in $box-shadows-dark {
+    --#{$prefix}box-#{$shadow}: #{$value};
+    .#{$shadow} {
+      box-shadow: var(--#{$prefix}box-#{$shadow}) !important;
+    }
+  }
+  @each $shadow, $value in $box-shadows-rgba-dark {
+    --#{$prefix}box-#{$shadow}-rgba: #{$value};
+  }
+
+  --#{$prefix}form-icon-valid-color: #{$form-feedback-icon-valid-color-dark};
+  --#{$prefix}form-icon-invalid-color: #{$form-feedback-icon-invalid-color-dark};
+  --#{$prefix}form-valid-color: #{$form-feedback-valid-color-dark};
+  --#{$prefix}form-invalid-color: #{$form-feedback-invalid-color-dark};
+
+  --#{$prefix}form-icon-valid-color-rgb: #{to-rgb($form-feedback-icon-valid-color-dark)};
+  --#{$prefix}form-icon-invalid-color-rgb: #{to-rgb($form-feedback-icon-invalid-color-dark)};
+
+  --#{$prefix}form-valid-color-rgb: #{to-rgb($form-feedback-valid-color-dark)};
+  --#{$prefix}form-invalid-color-rgb: #{to-rgb($form-feedback-invalid-color-dark)};
+}

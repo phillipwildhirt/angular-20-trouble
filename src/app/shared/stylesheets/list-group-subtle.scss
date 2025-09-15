@@ -1,0 +1,72 @@
+@use 'sass:math';
+// TODO comment the import after building
+@import 'src/variables.scss';
+
+@mixin list-group-subtle-item-variant(
+  $theme-name,
+  $color,
+  $background:               shift-color($color, $list-group-item-bg-scale),
+  $active-background:        shift-color($color, $list-group-item-bg-scale * .9),
+  $shift-color:              shift-color($color, $list-group-item-color-scale),
+  $list-group-variant-color: if(contrast-ratio($background, $color) < $min-contrast-ratio,
+    mix($color, color-contrast($background), math.abs($list-group-item-color-scale)),
+    $color),
+) {
+  .list-group-subtle-item-#{$theme-name} {
+    color: $list-group-variant-color;
+    background-color: transparentize($background, 1);
+
+    &.list-group-item-action {
+      &.variant {
+        background-color: transparentize($active-background, .75);
+
+        &:hover {
+          background-color: transparentize($active-background, .55);
+
+          &:focus {
+            background-color: transparentize($active-background, .4);
+          }
+        }
+      }
+
+      &:hover {
+        color: $list-group-variant-color;
+        background-color: transparentize($background, .85);
+
+        &:focus {
+          background-color: transparentize($background, .4);
+        }
+      }
+
+      &.active {
+        color: $list-group-variant-color;
+        background-color: transparentize($active-background, .5);
+        border-color: transparentize($color, .7);
+
+        &:hover {
+          background-color: transparentize($active-background, .3);
+
+          &:focus {
+            background-color: $active-background;
+          }
+        }
+
+        &.accent {
+          box-shadow: inset 2rem -5rem 3rem -6rem transparentize($list-group-variant-color, .75),
+                      inset -2rem 4.5rem 3rem -6rem transparentize($list-group-variant-color, .85),
+                      inset 0 0 10rem transparentize($list-group-variant-color, .95),
+                      inset 0 0 0 0.25rem transparentize($list-group-variant-color, .6);
+        }
+      }
+    }
+  }
+}
+
+  // List group contextual variants
+  //
+  // Add modifier classes to change text and background color on individual items.
+  // Organizationally, this must come after the `:hover` states.
+
+@each $theme-name, $value in $theme-colors {
+  @include list-group-subtle-item-variant($theme-name, $value);
+}

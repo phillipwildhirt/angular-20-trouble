@@ -1,0 +1,27 @@
+<div class="lds-ring-wrapper-2 row"
+     [style.width.px]="spinnerSize"
+     [style.height.px]="spinnerSize"
+     [style.min-width.px]="spinnerSize"
+     [style.min-height.px]="spinnerSize"
+     [style.max-width.px]="spinnerSize"
+     [style.max-height.px]="spinnerSize"
+     [style.verticalAlign.px]="verticalAlignOffset"
+     [ngClass]="{'lds-ring-complete-2': complete}">
+  <div [ngClass]="{'lds-ring-complete-2': complete}"
+       [ngStyle]="{'width.px': complete ? spinnerSize : null,
+                   'height.px': complete ? spinnerSize : null,
+                   'vertical-align.px': complete ? verticalAlignOffset : null}">
+    <div [ngClass]="{'lds-ring-complete-2-before': complete, 'was-init-complete' : wasInitComplete}"
+         [ngStyle]="{'vertical-align.px': complete ? verticalAlignOffset : null,
+                     'background-position': complete ? backgroundPosition : null,
+                     'background-size': complete ? backgroundSize : null}"
+         [style.width.px]="complete ? spinnerSize : null"
+         [style.height.px]="complete ? spinnerSize : null">
+    </div>
+    <div class="lds-ring-2"
+         [style.width.px]="spinnerSize"
+         [style.height.px]="spinnerSize">
+      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+@use 'sass:math';
+// comment the import after building
+// @import '../../../variables.scss';
+
+// Top section redefines button mixins.
+
+@mixin button-borderless-variant(
+  $color,
+  $background: transparentize($color, 1),
+  $hover-background: transparentize($color, .8),
+  $hover-color: $color,
+  $active-background: $color,
+  $active-border: $active-background,
+  $active-color: if(color-contrast($color) == $color-contrast-light, color-contrast($color), shade-color($color, 65)),
+  $disabled-background: $background,
+  $disabled-color: transparentize($color, .5)
+) {
+  color: $color;
+  @include gradient-bg($background);
+
+  &:hover,
+  &.hover {
+    color: $hover-color;
+    @include gradient-bg($hover-background);
+  }
+
+  &:focus,
+  &.focus {
+    color: $hover-color;
+    @include gradient-bg($hover-background);
+    @if $enable-shadows {
+      @include box-shadow(none);
+      // @include box-shadow($btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix($color, $color, 15%), .5));
+    }
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $active-color;
+    background-color: $active-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow(none);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+  }
+  @content
+}
+
+// End top section.
+
+// Bottom section. Actually creates btn-borderless style.
+
+$btn-font-size: $font-size-base;
+$btn-font-size-sm: $small-font-size;
+$btn-font-size-xs: $smaller-font-size;
+
+.btn-borderless {
+  display: inline-flex;
+  align-items: center;
+  font-family: $btn-font-family;
+  font-weight: $btn-font-weight;
+  font-style: italic;
+  line-height: 1.4;
+  font-size: $btn-font-size;
+  height: min-content;
+  padding: 0.125rem map-get($spacers, '2');
+  color: var(--bs-body-color);
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: $btn-white-space;
+  vertical-align: middle;
+  cursor: if($enable-button-pointers, pointer, null);
+  user-select: none;
+  background-color: transparent;
+  border: 0 solid transparent;
+  @include border-radius($border-radius, 0);
+  @include transition(color 0, background-color 0s, border-color 0s, box-shadow 0s);
+
+  &.btn-borderless-sm {
+    @include font-size($btn-font-size-sm);
+    line-height: $btn-line-height;
+    padding: 0.0625rem map-get($spacers, '2');
+    & i.bi,i.ai {
+      font-size: $font-size-base;
+    }
+  }
+
+  &.btn-borderless-smlr, &.btn-borderless-xs {
+    @include font-size($btn-font-size-xs);
+    line-height: $btn-line-height * 1.15;
+    padding: 0 map-get($spacers, '1');
+  }
+
+  &:hover {
+    color: var(--bs-body-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+    @include transition($btn-transition);
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+    @include transition(color .15s .1s ease-in-out, background-color .15s .1s ease-in-out, border-color .15s .1s ease-in-out, box-shadow .15s .1s ease-in-out);
+  }
+
+  &:active,
+  &.active {
+    @include box-shadow($btn-active-box-shadow);
+    @include transition(color 0s, background-color 0s, border-color 0s, box-shadow 0s);
+
+    &:focus {
+      @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
+  }
+
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    pointer-events: none;
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .btn-borderless.btn-#{$color} {
+    @include button-borderless-variant($value) {
+    }
+  }
+}
+
+// End bottom section.

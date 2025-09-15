@@ -1,0 +1,123 @@
+@use 'sass:map';
+@import 'bootstrap/scss/utilities';
+
+$utilities: map.merge(
+    $utilities,
+    (
+      "flex-grow": map.merge(
+          map.get($utilities, "flex-grow"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "flex-grow"), "values"),
+                (
+                  grow-2:  2,
+                  grow-3:  3,
+                  grow-4:  4,
+                  grow-10: 10,
+                  grow-20: 20,
+                ),
+            ),
+          ),
+      ),
+      "flex-shrink": map.merge(
+          map.get($utilities, "flex-shrink"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "flex-shrink"), "values"),
+                (
+                  shrink-2: 2,
+                  shrink-3: 3,
+                  shrink-4: 4,
+                ),
+            ),
+          ),
+      ),
+      "shadow": (
+        property: box-shadow,
+        class: shadow,
+        values: (
+          // shadow classes are created in root.scss using dark-mode variations.
+          none: none,
+        )
+      ),
+      "opacity": map.merge(
+          map.get($utilities, "opacity"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "opacity"), "values"),
+                (
+                  65: .65,
+                ),
+            ),
+          ),
+      ),
+      "text-align": map.merge(
+          map.get($utilities, "text-align"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "text-align"), "values"),
+                (
+                  justify: justify,
+                ),
+            ),
+          ),
+      ),
+      "viewport-height": map.merge(
+          map.get($utilities, "viewport-height"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "viewport-height"), "values"),
+                (
+                  50: 50vh)
+            )
+          )
+      ),
+      "height": map.merge(
+          map.get($utilities, "height"),
+          (
+            values: map.merge(
+                map.get(map.get($utilities, "height"), "values"),
+                (
+                  0: 0
+                )
+            )
+          )
+      ),
+      "max-width": (
+        property: max-width,
+        class: mw,
+        values: (
+          0  : 0,
+          50 : 50%,
+          75 : 75%,
+          100: 100%,
+          "max-content": max-content
+        )
+      ),
+      "max-height": (
+        property: max-height,
+        class: mh,
+        values: (
+          0  : 0,
+          100: 100%,
+          "max-content": max-content
+        )
+      ),
+      "min-width": (
+        property: min-width,
+        class: minw,
+        values: (
+          100: 100%,
+          0:   0
+        )
+      ),
+      "min-height": (
+        property: min-height,
+        class: minh,
+        values: (
+          100: 100%,
+          0:   0
+        )
+      ),
+    )
+);

@@ -1,0 +1,161 @@
+@use 'sass:math';
+@use 'sass:color';
+@import 'src/variables.scss';
+
+$list-group-item-bg-scale    : -80% !default; // Deprecated in v5.3.0
+$list-group-item-color-scale : 40% !default; // Deprecated in v5.3.0
+
+$active-background           : shift-color($body-bg, $list-group-item-bg-scale * .9);
+$background                  : shift-color($body-bg, $list-group-item-bg-scale);
+
+
+.list-group {
+  --#{$prefix}list-group-color                         : #{$list-group-color};
+  --#{$prefix}list-group-color-rgb                     : #{to-rgb($body-bg)};
+  --#{$prefix}list-group-bg                            : #{$list-group-bg};
+  --#{$prefix}list-group-border-color                  : #{$list-group-border-color};
+  --#{$prefix}list-group-border-width                  : #{$list-group-border-width};
+  --#{$prefix}list-group-border-radius                 : #{$list-group-border-radius};
+  --#{$prefix}list-group-item-padding-x                : #{$list-group-item-padding-x};
+  --#{$prefix}list-group-item-padding-y                : #{$list-group-item-padding-y};
+  --#{$prefix}list-group-action-color                  : #{$list-group-action-color};
+  --#{$prefix}list-group-action-variant-bg             : #{color.adjust($active-background, $alpha: -0.75)};
+  --#{$prefix}list-group-action-variant-hover-bg       : #{color.adjust($active-background, $alpha: -0.55)};
+  --#{$prefix}list-group-action-variant-hover-focus-bg : #{color.adjust($active-background, $alpha: -0.4)};
+  --#{$prefix}list-group-action-hover-color            : #{$list-group-action-hover-color};
+  --#{$prefix}list-group-action-hover-bg               : #{$list-group-hover-bg};
+  --#{$prefix}list-group-action-hover-focus-bg         : #{color.adjust($background, $alpha: -0.4)};
+  --#{$prefix}list-group-action-active-color           : #{$list-group-action-active-color};
+  --#{$prefix}list-group-action-active-bg              : #{$list-group-action-active-bg};
+  --#{$prefix}list-group-action-active-hover-bg        : #{color.adjust($active-background, $alpha: -0.3)};
+  --#{$prefix}list-group-action-active-hover-focus-bg  : #{$active-background};
+  --#{$prefix}list-group-disabled-color                : #{$list-group-disabled-color};
+  --#{$prefix}list-group-disabled-bg                   : #{$list-group-disabled-bg};
+  --#{$prefix}list-group-active-color                  : #{$list-group-active-color};
+  --#{$prefix}list-group-active-bg                     : #{$list-group-active-bg};
+  --#{$prefix}list-group-active-border-color           : #{$list-group-active-border-color};
+  // scss-docs-end list-group-css-vars
+}
+
+@include color-mode(dark) {
+  $active-background : shift-color($body-bg-dark, $list-group-item-bg-scale * .9);
+  $background        : shift-color($body-bg-dark, $list-group-item-bg-scale);
+  .list-group {
+    --#{$prefix}list-group-color                         : #{$list-group-color};
+    --#{$prefix}list-group-color-rgb                     : #{to-rgb($body-bg-dark)};
+    --#{$prefix}list-group-bg                            : #{$list-group-bg};
+    --#{$prefix}list-group-border-color                  : #{$list-group-border-color};
+    --#{$prefix}list-group-border-width                  : #{$list-group-border-width};
+    --#{$prefix}list-group-border-radius                 : #{$list-group-border-radius};
+    --#{$prefix}list-group-item-padding-x                : #{$list-group-item-padding-x};
+    --#{$prefix}list-group-item-padding-y                : #{$list-group-item-padding-y};
+    --#{$prefix}list-group-action-color                  : #{$list-group-action-color};
+    --#{$prefix}list-group-action-variant-bg             : #{color.adjust($active-background, $alpha: -0.85)};
+    --#{$prefix}list-group-action-variant-hover-bg       : #{color.adjust($active-background, $alpha: -0.65)};
+    --#{$prefix}list-group-action-variant-hover-focus-bg : #{color.adjust($active-background, $alpha: -0.5)};
+    --#{$prefix}list-group-action-hover-color            : #{$list-group-action-hover-color};
+    --#{$prefix}list-group-action-hover-bg               : #{$list-group-hover-bg};
+    --#{$prefix}list-group-action-hover-focus-bg         : #{color.adjust($background, $alpha: -0.5)};
+    --#{$prefix}list-group-action-active-color           : #{$list-group-action-active-color};
+    --#{$prefix}list-group-action-active-bg              : #{$list-group-action-active-bg};
+    --#{$prefix}list-group-action-active-hover-bg        : #{color.adjust($active-background, $alpha: -0.4)};
+    --#{$prefix}list-group-action-active-hover-focus-bg  : #{$active-background};
+    --#{$prefix}list-group-disabled-color                : #{$list-group-disabled-color};
+    --#{$prefix}list-group-disabled-bg                   : #{$list-group-disabled-bg};
+    --#{$prefix}list-group-active-color                  : #{$list-group-active-color};
+    --#{$prefix}list-group-active-bg                     : #{$list-group-active-bg};
+    --#{$prefix}list-group-active-border-color           : #{$list-group-active-border-color};
+    // scss-docs-end list-group-css-vars
+  }
+}
+
+.list-group-item-action {
+  color: var(--#{$prefix}list-group-action-color);
+
+  &.variant {
+    background-color: var(--#{$prefix}list-group-action-variant-bg);
+
+    &:hover {
+      background-color: var(--#{$prefix}list-group-action-variant-hover-bg);
+
+      &:focus {
+        background-color: var(--#{$prefix}list-group-action-variant-hover-focus-bg);
+      }
+    }
+  }
+
+  &:hover {
+    color: var(--#{$prefix}list-group-action-hover-color);
+    background-color: var(--#{$prefix}list-group-action-hover-bg);
+
+    &:focus {
+      background-color: var(--#{$prefix}list-group-action-hover-focus-bg);
+    }
+  }
+
+  &.active {
+    color: var(--#{$prefix}list-group-action-active-color);
+    background-color: var(--#{$prefix}list-group-action-active-bg);
+
+    &:hover {
+      background-color: var(--#{$prefix}list-group-action-active-hover-bg);
+
+      &:focus {
+        background-color: var(--#{$prefix}list-group-action-active-hover-focus-bg);
+      }
+    }
+
+    &.accent {
+      box-shadow: inset 2rem -5rem 3rem -6rem rgba(var(--#{$prefix}list-group-color-rgb), .25),
+                  inset -2rem 4.5rem 3rem -6rem rgba(var(--#{$prefix}list-group-color-rgb), .15),
+                  inset 0 0 10rem rgba(var(--#{$prefix}list-group-color-rgb), .05),
+                  inset 0 0 0 0.25rem rgba(var(--#{$prefix}list-group-color-rgb), .4);
+    }
+  }
+}
+
+
+@each $state, $color in $theme-colors {
+  $background               : shift-color($color, $list-group-item-bg-scale);
+  $active-background        : shift-color($color, $list-group-item-bg-scale * .9);
+  $shift-color              : shift-color($color, $list-group-item-color-scale);
+  $list-group-variant-color : if(contrast-ratio($background, $color) < $min-contrast-ratio,
+    color.mix($color, color-contrast($background), math.abs($list-group-item-color-scale)),
+    $color);
+
+  .list-group-subtle-item-#{$state} {
+    --#{$prefix}list-group-color                         : #{$list-group-variant-color};
+    --#{$prefix}list-group-color-rgb                     : #{to-rgb($list-group-variant-color)};
+    --#{$prefix}list-group-bg                            : #{color.adjust($background, $alpha: -1)};
+    --#{$prefix}list-group-border-color                  : #{$border-color};
+    --#{$prefix}list-group-action-variant-bg             : #{color.adjust($active-background, $alpha: -0.75)};
+    --#{$prefix}list-group-action-variant-hover-bg       : #{color.adjust($active-background, $alpha: -0.55)};
+    --#{$prefix}list-group-action-variant-hover-focus-bg : #{color.adjust($active-background, $alpha: -0.4)};
+    --#{$prefix}list-group-action-hover-color            : #{$list-group-variant-color};
+    --#{$prefix}list-group-action-hover-bg               : #{color.adjust($background, $alpha: -0.85)};
+    --#{$prefix}list-group-action-hover-focus-bg         : #{color.adjust($background, $alpha: -0.4)};
+    --#{$prefix}list-group-action-active-color           : #{$list-group-variant-color};
+    --#{$prefix}list-group-action-active-bg              : #{color.adjust($active-background, $alpha: -0.5)};
+    --#{$prefix}list-group-action-active-hover-bg        : #{color.adjust($active-background, $alpha: -0.3)};
+    --#{$prefix}list-group-action-active-hover-focus-bg  : #{$active-background};
+    --#{$prefix}list-group-active-color                  : #{$list-group-variant-color};
+    --#{$prefix}list-group-active-bg                     : #{color.adjust($active-background, $alpha: -0.5)};
+    --#{$prefix}list-group-active-border-color           : #{color.adjust($color, $alpha: -0.7)};
+  }
+  @include color-mode(dark) {
+    .list-group-subtle-item-#{$state} {
+      --#{$prefix}list-group-bg                            : #{color.adjust($background, $alpha: -1)};
+      --#{$prefix}list-group-border-color                  : #{$border-color-dark};
+      --#{$prefix}list-group-action-variant-bg             : #{color.adjust($active-background, $alpha: -0.9)};
+      --#{$prefix}list-group-action-variant-hover-bg       : #{color.adjust($active-background, $alpha: -0.8)};
+      --#{$prefix}list-group-action-variant-hover-focus-bg : #{color.adjust($active-background, $alpha: -0.6)};
+      --#{$prefix}list-group-action-hover-bg               : #{color.adjust($background, $alpha: -0.9)};
+      --#{$prefix}list-group-action-hover-focus-bg         : #{color.adjust($background, $alpha: -0.6)};
+      --#{$prefix}list-group-action-active-bg              : #{color.adjust($active-background, $alpha: -0.75)};
+      --#{$prefix}list-group-action-active-hover-bg        : #{color.adjust($active-background, $alpha: -0.6)};
+      --#{$prefix}list-group-active-bg                     : #{color.adjust($active-background, $alpha: -0.7)};
+      --#{$prefix}list-group-active-border-color           : #{color.adjust($color, $alpha: -0.45)};
+    }
+  }
+}
+// scss-docs-end list-group-modifiers
