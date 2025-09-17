@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { NotificationPill, NotificationPillComponent } from '@app/shared/notification-pill/notification-pill.component';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass } from '@angular/common';
 import { isEmpty } from 'lodash-es';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -11,7 +9,6 @@ import { ComponentStateDirective } from '@app/shared/directives/component-state.
 import { asyncDelay } from '@app/shared/utilities-and-functions/async-delay';
 import { SaveState } from '@app/shared/models/save-state.enum';
 import { Observable, Subject } from 'rxjs';
-import { SimpleChangeTyped } from '@app/shared/models/simple-changes-typed.model';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -20,15 +17,13 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
   styleUrls: ['./module-tab.component.scss', '../stylesheets/btn-pill-close-x.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    NgbTooltip,
     NgClass,
-    NotificationPillComponent,
     CdkObserveContent,
     ComponentStateDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModuleTabComponent implements OnInit, OnChanges, OnDestroy {
+export class ModuleTabComponent implements OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly unsub$ = new Subject<void>();
 
@@ -59,7 +54,6 @@ export class ModuleTabComponent implements OnInit, OnChanges, OnDestroy {
    <br>  Inputs.
    * @param NotificationPill[]<styleTag:string,size:string,value:string>
    */
-  @Input() notifications: NotificationPill[] = [];
 
   /**
    * @desc (optional) used to display a badge.
@@ -159,23 +153,6 @@ export class ModuleTabComponent implements OnInit, OnChanges, OnDestroy {
       this.saveState$.pipe(takeUntil(this.unsub$), distinctUntilChanged()).subscribe(() => this.cdr.markForCheck());
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const changePill: SimpleChangeTyped<typeof this.notifications> = changes['notificationPill'];
-    if (changePill
-      && (
-        changePill.firstChange
-        || changePill.currentValue.length !== changePill.previousValue.length
-        || changePill.currentValue.some((pill, i) =>
-          pill.value !== changePill.previousValue[i].value
-          || pill.size !== changePill.previousValue[i].size
-          || pill.styleTag !== changePill.previousValue[i].styleTag
-          || pill.tooltip !== changePill.previousValue[i].tooltip)
-      )
-    ) {
-      this.cdr.markForCheck();
-    }
-  }
-
   ngOnDestroy(): void {
     this.unsub$.next();
     this.unsub$.complete();
@@ -193,17 +170,6 @@ export class ModuleTabComponent implements OnInit, OnChanges, OnDestroy {
     if (this.ignoreClosingMouseClick)
       e.stopImmediatePropagation();
     this.closeTabEvent.next();
-  }
-
-  trackByFn = (index: number, n: NotificationPill): string => {
-    return index + ':' + n.size + n.value + n.styleTag;
-  };
-
-  closeTooltipFast(t: NgbTooltip): void {
-    const previousAnimationSetting = t.animation;
-    t.animation = false;
-    t.close();
-    asyncDelay(300, () => t.animation = previousAnimationSetting);
   }
 
   observed(title: string, $event: MutationRecord[]): void {

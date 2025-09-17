@@ -6,20 +6,19 @@ import { ModuleDraggableItem, ModuleDroppableEventObject } from '@app/shared/mod
 import { NotificationsModComponent } from '@app/dashboard/notifications-mod/notifications-mod.component';
 import { ModuleData } from '@app/shared/models/module-data.model';
 import { NotesModComponent } from '@app/dashboard/notes-mod/notes-mod.component';
-import { ToastService } from '@app/shared/toast/toast.service';
 import { Store } from '@ngrx/store';
-import { delay, exhaustMap, filter, map, skip, take, takeUntil, tap } from 'rxjs/operators';
+import { exhaustMap, filter, map, skip, take, tap } from 'rxjs/operators';
 import { Constants } from '@assets/constants/constants';
 import { authFeature } from '@app/auth/store/auth.reducer';
 import { MenuGroup } from '@app/shared/models/menu-group.model';
 import { ModulePrefData } from '@app/shared/models/module-pref-data';
-import { ModulesAndActionType, ModuleViewAdjustAction } from '@app/dashboard/models/module-view-adjust-action.enum';
 import { User } from '@app/shared/models/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { InternalAuditService } from '@app/audit/internal-audit.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { elementRefRetry } from '@app/shared/utilities-and-functions/element-ref-retry.function';
 import { Action } from '@app/shared/models/action.model';
+import { Modules } from '@app/dashboard/models/module-view-adjust-action.enum';
 
 export type DarkMode = 'dark' | 'light' | 'system';
 
@@ -27,7 +26,6 @@ export type DarkMode = 'dark' | 'light' | 'system';
   providedIn: 'root'
 })
 export class DashboardViewService extends InternalAuditService implements OnDestroy {
-  private toastService = inject(ToastService);
   readonly store = inject(Store);
   private authService = inject(AuthService);
 
@@ -40,14 +38,11 @@ export class DashboardViewService extends InternalAuditService implements OnDest
   public droppableZones: any[] = [];
   private zonePrefix = 'zone-';
   private allModules: ModuleDraggableItem[] = [];
-  public readonly modules$ = new BehaviorSubject<ModulesAndActionType>(new ModulesAndActionType(ModuleViewAdjustAction.unknown, [[], [], [], []]));
+  public readonly modules$ = new BehaviorSubject<Modules>(new Modules([[], [], [], []]));
   public readonly availableModules$ = new BehaviorSubject<ModuleData[]>([]);
   private availableModules: ModuleData[] = [];
 
-  readonly viewAdjust$ = new BehaviorSubject<boolean>(false);
-  readonly onViewAdjust$ = new Subject<boolean>();
   readonly isDragging$ = new BehaviorSubject<boolean>(false);
-  readonly activateNotices$ = new BehaviorSubject<boolean>(false);
 
   public widthGapPercentage = 0;
   public heightGapPercentage = 0;
@@ -56,23 +51,9 @@ export class DashboardViewService extends InternalAuditService implements OnDest
   private readonly unsub$ = new Subject<void>();
 
   public loadingDashboard$ = new BehaviorSubject<boolean>(false);
-  public moduleDataAtViewAdjustStart: ModulePrefData[] | undefined;
   private dashboardMenu: MenuGroup[] = [];
 
   readonly darkMode$ = new BehaviorSubject<DarkMode>('system');
-  readonly isInDarkMode$ = this.darkMode$.pipe(map(v => {
-      switch (v) {
-        case 'dark':
-          return true;
-        case 'light':
-          return false;
-        case 'system':
-        default:
-          const prefersDarkScheme: MediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
-          return prefersDarkScheme.matches;
-      }
-    })
-  );
 
 
   constructor() {
@@ -201,11 +182,8 @@ export class DashboardViewService extends InternalAuditService implements OnDest
           skip(1)
         ))
     ).subscribe((userId) => {
-      this.cancelViewAdjustOnUserChange();
       this.getUserSecurityAndSettingsAndPushModules(userId);
     });
-
-    this.onViewAdjust$.pipe(takeUntil(this.unsub$), filter(v => v)).subscribe(() => this.onViewAdjust());
 
     let taskQuery = this.availableModules.find(module => module.preferencesKey === 'task');
     if (taskQuery) {
@@ -374,7 +352,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
             this.calcModuleSizes().subscribe(() => {
               let modules = this.arrangeAndSortAllModulesToGrid();
               // first emission:
-              this.modules$.next({ modules, type: ModuleViewAdjustAction.unknown });
+              this.modules$.next({ modules });
               this.reinitModuleViewFromData(modules);
               this.loadingDashboard$.next(false);
             });
@@ -469,15 +447,14 @@ export class DashboardViewService extends InternalAuditService implements OnDest
     return modules;
   }
 
-  public updateModules$(type: ModuleViewAdjustAction, modules?: ModuleDraggableItem[][]): void {
-    this.checkAndStoreModulesBeforeChanges();
+  public updateModules$(modules?: ModuleDraggableItem[][]): void {
     if (!modules) {
       modules = this.arrangeAndSortAllModulesToGrid();
     }
     for (const module of this.allModules) {
       module.zones = this.generateDropZones(module.data.rowColumn);
     }
-    this.modules$.next({ modules, type });
+    this.modules$.next({ modules });
     this.viewNormal();
     this.changePositionValues(modules);
   }
@@ -493,14 +470,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
   }
 
   public onWindowResize() {
-    this.calcModuleSizes().subscribe(() => {
-      this.reinitModuleViewFromData();
-      if (this.viewAdjust$.value) {
-        of([]).pipe(
-          delay(300)
-        ).subscribe(() => this.onViewAdjust());
-      }
-    });
+    this.calcModuleSizes().subscribe(() => this.reinitModuleViewFromData());
   }
 
   /**
@@ -709,37 +679,8 @@ export class DashboardViewService extends InternalAuditService implements OnDest
         //   break;
       }
     });
-    this.updateModules$(ModuleViewAdjustAction.rearrange);
+    this.updateModules$();
     return { ORIGIN: event.data.name, DESTINATION: event.zone.data.name ? event.zone.data.name : 'New Row or Column' };
-  }
-
-  public onViewAdjust(): void {
-    this.viewAdjust$.next(true);
-    for (let m of this.allModules) {
-      if ((m.data as ModuleData).collapsed$.value) {
-        this.checkAndStoreModulesBeforeChanges();
-        this.onExpand(m.data.name, true);
-        break;
-      }
-    }
-  }
-
-  public checkAndStoreModulesBeforeChanges(): void {
-    if (this.moduleDataAtViewAdjustStart === undefined) {
-      this.moduleDataAtViewAdjustStart = this.prepareModulePrefData();
-    }
-  }
-
-  public deleteModule(event: any): void {
-    const origin = event.data.rowColumn;
-    this.allModules.forEach(module => {
-      if (module.data.rowColumn === origin) {
-        this.allModules.splice(this.allModules.indexOf(module), 1);
-        this.availableModules.push(module.data);
-        this.availableModules$.next(this.availableModules);
-      }
-    });
-    this.updateModules$(ModuleViewAdjustAction.rearrange);
   }
 
   public addModule(module: ModuleData): void {
@@ -761,7 +702,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
       }
       this.availableModules.splice(this.availableModules.indexOf(module), 1);
       this.availableModules$.next(this.availableModules);
-      this.updateModules$(ModuleViewAdjustAction.rearrange);
+      this.updateModules$();
     };
 
     let rowCol: number[] = [];
@@ -779,8 +720,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
       case rowCol.indexOf(22):
         pushModule(22);
         break;
-      default:
-        this.toastService.show('No Module space available. Delete a module first', {classname: 'bg-danger text-white'});
     }
   }
 
@@ -842,52 +781,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
         analyticsData = {...analyticsData, Y_DOWNSIZED_MODULE: Y_DOWNSIZED_MODULES.sort().join(', '), Y_UPSIZED_MODULES: Y_UPSIZED_MODULES.sort().join(', ')};
         break;
     }
-    this.updateModules$(ModuleViewAdjustAction.resize, modules);
+    this.updateModules$(modules);
     return analyticsData;
-  }
-
-  prepareModulePrefData(): ModulePrefData[] {
-    let modules: ModulePrefData[] = [];
-    this.allModules.forEach(module => {
-      let newMod = new ModulePrefData(module.data);
-      newMod.preferredWidth = Number(newMod.preferredWidth.toFixed(4));
-      newMod.preferredHeight = Number(newMod.preferredHeight.toFixed(4));
-      newMod.expanded = module.data.expanded$.value;
-      newMod.collapsed = module.data.collapsed$.value;
-      modules.push(newMod);
-    });
-    return modules;
-  }
-
-  public restoreStoredModuleData(): void {
-    if (this.moduleDataAtViewAdjustStart !== undefined) {
-      this.availableModules = [];
-      this.setAvailableModulesOnInit();
-
-      this.allModules = [];
-      this.moduleDataAtViewAdjustStart.forEach(modulePref => {  //build ModuleData for user's modules
-        if (this.modulesMap.get(modulePref.name) !== undefined) {
-          Object.assign(this.modulesMap.get(modulePref.name)!, modulePref);
-          this.allModules.push(new ModuleDraggableItem(
-            this.generateDropZones(modulePref.rowColumn),
-            this.modulesMap.get(modulePref.name)
-          ));
-        }
-      });
-      //filter out selected modules from availableModules
-      this.availableModules = this.availableModules.filter(mod => this.allModules.map(module => module.data).indexOf(mod) < 0);
-      this.availableModules$.next(this.availableModules);
-
-      let modules = this.arrangeAndSortAllModulesToGrid();
-      this.modules$.next({ modules, type: ModuleViewAdjustAction.unknown });
-      this.reinitModuleViewFromData(modules);
-    }
-    this.moduleDataAtViewAdjustStart = undefined;
-    this.viewAdjust$.next(false);
-  }
-
-  private cancelViewAdjustOnUserChange(): void {
-    this.moduleDataAtViewAdjustStart = undefined;
-    this.viewAdjust$.next(false);
   }
 }

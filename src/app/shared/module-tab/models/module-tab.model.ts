@@ -1,4 +1,3 @@
-import { NotificationPill } from '@app/shared/notification-pill/notification-pill.component';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/';
 import { BehaviorSubject, Observable, pairwise, Subject, SubjectLike } from 'rxjs';
 import { TabState } from '@app/shared/module-tab/models/tab-state.type';
@@ -10,7 +9,6 @@ export class ModuleTab<T extends string, K extends string> {
   key: K;
   title: T;
   state: TabState;
-  notifications: NotificationPill[];
   badge: string;
   icon: string;
   subText: boolean;
@@ -32,7 +30,6 @@ export class ModuleTab<T extends string, K extends string> {
                 key: K,
                 title: T,
                 state?: TabState,
-                notifications?: NotificationPill[],
                 badge?: string,
                 icon?: string,
                 subText?: boolean,
@@ -55,7 +52,6 @@ export class ModuleTab<T extends string, K extends string> {
     this.key = data.key;
     this.title = data.title;
     this.state = data.state ?? '';
-    this.notifications = data.notifications ?? [];
     this.badge = data.badge ?? '';
     this.icon = data.icon ?? '';
     this.subText = data.subText ?? false;

@@ -1,0 +1,12 @@
+@import 'src/variables';
+
+.window-custom {
+  position: fixed;
+  top: 66px;
+  left: 66px;
+  height: calc(100vh - 66px);
+  min-width: calc(100vw - 66px);
+  max-width: calc(100vw - 66px);
+  overflow-x: hidden;
+  background: var(--bs-tertiary-bg);
+}

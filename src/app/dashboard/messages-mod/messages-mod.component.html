@@ -1,6 +1,5 @@
 <div [dpsModuleDraggable]="module"
      [moduleViewService]="dashboardViewService"
-     [isDraggableMode$]="viewAdjust$"
      class="w-100 h-100">
   <div id="drag-image-placeholder"></div>
   <div #parentElementRef
@@ -17,22 +16,12 @@
             </div>
           </div>
         </a>
-        <!--if Empty should allow entire banner to expand module-->
-        <div class="flex-grow-1 ps-7" (click)="onExpandCollapse()" [ngClass]="{'clickable' : collapsed}" style="margin: -6.5px 0;">
-        </div>
         <div class="flex-start align-items-center my-n1">
-          <dps-button-icon icon="bi-gear-fill" color="dpsblue-light" size="sm"/>
         </div>
       </div>
     </div>
-    @if (!collapsed && (dataLoading$ | async)) {
-      <div class="top-50 start-50 translate-middle position-absolute">
-        <dps-spinner [spinnerSize]="96"/>
-      </div>
-    }
-    @if (!collapsed && (dataLoading$ | async) === false) {
-      <div [@showHide]=""
-           class="flex-start flex-row minh-0 position-relative">
+    @if (!collapsed) {
+      <div class="flex-start flex-row minh-0 position-relative">
         <div class="w-100 overflow-auto">
           @if (!collapsed) {
             <div>

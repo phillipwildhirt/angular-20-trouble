@@ -4,14 +4,13 @@ import { QueryTaskModComponent } from '@app/dashboard/query-task-mod/query-task-
 import { NotificationsModComponent } from '@app/dashboard/notifications-mod/notifications-mod.component';
 import { BehaviorSubject } from 'rxjs';
 import { NotesModComponent } from '@app/dashboard/notes-mod/notes-mod.component';
-import { DropRearrangePlaceholderComponent } from '@app/dashboard/drop-rearrange-placeholder/drop-rearrange-placeholder.component';
 import { ModulePrefData } from '@app/shared/models/module-pref-data';
 
 export class ModuleData extends ModulePrefData {
   constructor(
     public readonly name: string,
     public readonly id: number,
-    public readonly component: ComponentType<DropRearrangePlaceholderComponent | MessagesModComponent | QueryTaskModComponent | NotificationsModComponent | NotesModComponent>,
+    public readonly component: ComponentType<MessagesModComponent | QueryTaskModComponent | NotificationsModComponent | NotesModComponent>,
     public rowColumn: number,
     public readonly expanded$: BehaviorSubject<boolean>,
     public readonly collapsed$: BehaviorSubject<boolean>,

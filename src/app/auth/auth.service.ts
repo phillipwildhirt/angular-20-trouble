@@ -4,7 +4,6 @@ import { BehaviorSubject, merge, Observable, of, pipe, Subject } from 'rxjs';
 import { catchError, filter, map, scan, takeUntil, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as AuthActions from './store/auth.actions';
-import { ToastService } from '@app/shared/toast/toast.service';
 import { UserScope } from '@app/auth/models/user-scope.model';
 import { authFeature } from '@app/auth/store/auth.reducer';
 import { InternalAuditService } from '@app/audit/internal-audit.service';
@@ -15,7 +14,6 @@ import { InternalAuditService } from '@app/audit/internal-audit.service';
 
 export class AuthService extends InternalAuditService {
   private readonly store = inject(Store);
-  private toastService = inject(ToastService);
 
   validating$ = new BehaviorSubject<boolean>(false);
 
@@ -82,7 +80,6 @@ export class AuthService extends InternalAuditService {
         }
       }),
       catchError(() => {
-        this.toastService.danger('Unable to retrieve User Scope');
         return of(new UserScope({
                                   userid: '',
                                   email: '',
