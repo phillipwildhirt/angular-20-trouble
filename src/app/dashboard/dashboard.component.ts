@@ -3,7 +3,6 @@ import { DashboardViewService } from '@app/dashboard/dashboard-view.service';
 import { takeUntil, throttleTime } from 'rxjs/operators';
 import { asyncScheduler, Subject } from 'rxjs';
 import { ModuleDraggableItem } from '@app/shared/module-drag-and-drop-resize/module-drag-and-drop.model';
-import { ModuleDragService } from '@app/shared/module-drag-and-drop-resize/module-drag.service';
 import { CREATOR } from '@app/audit/internal-audit.service';
 import { Constants } from '@assets/constants/constants';
 import { Modules } from '@app/dashboard/models/module-view-adjust-action.enum';
@@ -13,7 +12,6 @@ import { Modules } from '@app/dashboard/models/module-view-adjust-action.enum';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [
-    ModuleDragService,
     { provide: CREATOR, useValue: 'DashboardComponent' }
   ],
   standalone: false

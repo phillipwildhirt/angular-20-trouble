@@ -21,14 +21,3 @@ export const elementRefRetry = (getRef: () => (any | undefined | null), count: n
     take(1),
     retry( {count, delay}));
 };
-
-export const nodeListRefRetry = (getRef: () => (NodeList | undefined | null), count: number = 20, delay: number = 1): Observable<NodeList> => {
-  return of(0).pipe(
-    map(() => {
-      const ref = getRef();
-      if (ref !== undefined && ref !== null && ref.length > 0) { return ref;
-      } else { throw 'Unable to find NodeList. Try increasing count or delay.'; }}),
-    take(1),
-    retry( {count, delay}));
-};
-

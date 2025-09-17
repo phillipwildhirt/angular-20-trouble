@@ -1,5 +1,3 @@
-@import 'src/app/dps-side-nav/dps-side-nav.variables';
-
 div.module-drop-zone {
   transition: height 300ms ease-out, width 300ms ease-out, top 300ms ease-out, left 300ms ease-out;
 }
@@ -70,7 +68,7 @@ div.module-drop-zone {
 }
 
 spinner-container {
-  min-height: calc(100% - $ebiz-nav-height);
-  width: calc(100% - $menu-closed-width);
+  min-height: calc(100% - 66px);
+  width: calc(100% - 66px);
   position: relative;
 }

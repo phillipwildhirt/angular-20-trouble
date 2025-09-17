@@ -1,7 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { DashboardViewService } from '@app/dashboard/dashboard-view.service';
 import { ModuleDraggableItem } from '@app/shared/module-drag-and-drop-resize/module-drag-and-drop.model';
-
 import { CREATOR } from '@app/audit/internal-audit.service';
 
 @Component({

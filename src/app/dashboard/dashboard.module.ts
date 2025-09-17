@@ -5,14 +5,9 @@ import { SharedModule } from '@app/shared/shared.module';
 import { QueryTaskModComponent } from './query-task-mod/query-task-mod.component';
 import { NotificationsModComponent } from './notifications-mod/notifications-mod.component';
 import { NotesModComponent } from './notes-mod/notes-mod.component';
-import { DndModule } from 'ngx-drag-drop';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { ModuleDraggableDirective } from '@app/shared/module-drag-and-drop-resize/module-draggable.directive';
-import { ModuleTabComponent } from '@app/shared/module-tab/module-tab.component';
-import { ModuleDroppableDirective } from '@app/shared/module-drag-and-drop-resize/module-droppable.directive';
-import { ModuleResizeDirective } from '@app/shared/module-drag-and-drop-resize/module-resize.directive';
 import { CREATOR } from '@app/audit/internal-audit.service';
 import { DashboardViewService } from '@app/dashboard/dashboard-view.service';
 import { MODULE_VIEW_SERVICE } from '@app/shared/module-drag-and-drop-resize/module-view.service';
@@ -32,13 +27,6 @@ export const dashboardRoutes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(dashboardRoutes),
-    DndModule,
-
-    ModuleTabComponent,
-
-    ModuleDraggableDirective,
-    ModuleDroppableDirective,
-    ModuleResizeDirective,
   ],
   exports: [
     RouterModule,

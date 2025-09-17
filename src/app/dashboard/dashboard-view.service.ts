@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MessagesModComponent } from '@app/dashboard/messages-mod/messages-mod.component';
 import { QueryTaskModComponent } from '@app/dashboard/query-task-mod/query-task-mod.component';
-import { ModuleDraggableItem, ModuleDroppableEventObject } from '@app/shared/module-drag-and-drop-resize/module-drag-and-drop.model';
+import { ModuleDraggableItem } from '@app/shared/module-drag-and-drop-resize/module-drag-and-drop.model';
 import { NotificationsModComponent } from '@app/dashboard/notifications-mod/notifications-mod.component';
 import { ModuleData } from '@app/shared/models/module-data.model';
 import { NotesModComponent } from '@app/dashboard/notes-mod/notes-mod.component';
@@ -238,27 +238,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
               'styling': '{"preferredWidth":"0.6666","preferredHeight":"0.3333"}',
               'tooltip': 'Inbox views  |  Notifications  |  Email forwarding  |  Alerts',
               'roles': [
-                'DPS_Agent',
-                'DPS_Agent_Logistics',
-                'DPS_Agent_Technical',
-                'DPS_Bernard_Chaus',
-                'DPS_Color_Analyst',
-                'DPS_Coordinator',
-                'DPS_Customs',
-                'DPS_Designer',
-                'DPS_Director',
-                'DPS_Domestic_Manufacturer',
-                'DPS_Freight_Forwarder',
-                'DPS_Import_Manufacturer',
-                'DPS_Inspector',
-                'DPS_Library',
-                'DPS_Logistics',
-                'DPS_Packaging',
-                'DPS_Quality_Control',
-                'DPS_Sourcing_Director',
-                'DPS_Staff',
-                'DPS_Technician',
-                'DPS_Technician_Admin',
                 'DPS_Admin',
                 'DPS_Support'
               ],
@@ -273,27 +252,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
             'styling': '{"preferredWidth":"0.3333","preferredHeight":"0.3333"}',
             'tooltip': 'Inbox views  |  Notifications  |  Email forwarding  |  Alerts',
             'roles': [
-              'DPS_Agent',
-              'DPS_Agent_Logistics',
-              'DPS_Agent_Technical',
-              'DPS_Bernard_Chaus',
-              'DPS_Color_Analyst',
-              'DPS_Coordinator',
-              'DPS_Customs',
-              'DPS_Designer',
-              'DPS_Director',
-              'DPS_Domestic_Manufacturer',
-              'DPS_Freight_Forwarder',
-              'DPS_Import_Manufacturer',
-              'DPS_Inspector',
-              'DPS_Library',
-              'DPS_Logistics',
-              'DPS_Packaging',
-              'DPS_Quality_Control',
-              'DPS_Sourcing_Director',
-              'DPS_Staff',
-              'DPS_Technician',
-              'DPS_Technician_Admin',
               'DPS_Admin',
               'DPS_Support'
             ],
@@ -308,30 +266,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
             'styling': '{"preferredWidth":"1","preferredHeight":"0.6666"}',
             'tooltip': 'Close Tabs  |  Reset to default tabs  |  Rows to load',
             'roles': [
-              'DPS_Agent',
-              'DPS_Agent_Logistics',
-              'DPS_Agent_Technical',
-              'DPS_ADPL_Import',
-              'DPS_Bernard_Chaus',
-              'DPS_Color_Analyst',
-              'DPS_Coordinator',
-              'DPS_Customs',
-              'DPS_Designer',
-              'DPS_Director',
-              'DPS_Domestic_Manufacturer',
-              'DPS_Finance',
-              'DPS_Freight_Forwarder',
-              'DPS_Import_Manufacturer',
-              'DPS_Inspector',
-              'DPS_Library',
-              'DPS_Logistics',
-              'DPS_Mail_Room',
-              'DPS_Packaging',
-              'DPS_Quality_Control',
-              'DPS_Sourcing_Director',
-              'DPS_Staff',
-              'DPS_Technician',
-              'DPS_Technician_Admin',
               'DPS_Admin',
               'DPS_Support'
             ],
@@ -363,7 +297,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
           this.allModules = [];
           const prefs = [
             {
-              'user': 'WILDHPA',
+              'user': 'MYUSERNAME',
               'module': 'dashboard',
               'settings': {
                 'stylePart1NavigationMenuOnboarding': 1,
@@ -402,7 +336,7 @@ export class DashboardViewService extends InternalAuditService implements OnDest
                 ]
               },
               'updateSt': '2025-09-12 14:10:33.000448',
-              'updateUser': 'WILDHPA'
+              'updateUser': 'MYUSERNAME'
             }
           ];
           this.darkMode$.next(prefs[0].settings.darkMode as DarkMode);
@@ -491,21 +425,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
       case Constants.DASHBOARD_MODS.NOTIFICATIONS:
       case Constants.DASHBOARD_MODS.MESSAGES:
         modules = this.viewNormal();
-        this.changePositionValues(modules);
-        break;
-    }
-  }
-
-  /**
-   * This determines what happened when Collapse is called on the module.
-   * In this case you can only collapse and "Expanded" module. Case 1
-   * @param module<string> Name of Module that "collapse" was executed from.
-   */
-  public onCollapse(module: string): void {
-    switch (module) {
-      case Constants.DASHBOARD_MODS.PERSONAL_NOTES:
-      case Constants.DASHBOARD_MODS.QUERY_TASK:
-        const modules = this.viewNormal();
         this.changePositionValues(modules);
         break;
     }
@@ -645,44 +564,6 @@ export class DashboardViewService extends InternalAuditService implements OnDest
     });
   }
 
-  public changeColumnRowOrder(event: ModuleDroppableEventObject): { ORIGIN: string, DESTINATION: string } {
-    /** Origin: event.data.rowColumn = where the dropped module came from
-     * Destination: event.zone.data.rowColumn = where the dropped module is going to
-     */
-    const origin = event.data.rowColumn;
-    const destination = event.zone.data.rowColumn;
-    this.allModules.forEach(module => {
-      switch (true) {
-        /** for the module being replaced */
-        case module.data.rowColumn === destination:
-          module.data.rowColumn = origin;
-          break;
-        /** for the module that was moved */
-        case module.data.rowColumn === origin:
-          module.data.rowColumn = destination;
-          break;
-        /** for a row swap */
-        // case origin < 20 && destination >= 20:
-        // case origin >= 20 && destination < 20:
-        //   switch (true) {
-        //     /** for other modules in the same row that need to move */
-        //     case (Math.floor(module.data.rowColumn / 10) * 10) === (Math.floor(destination / 10) * 10):
-        //       module.data.rowColumn = (Math.floor(origin / 10) * 10) + module.data.rowColumn % 10;
-        //       module.data.rowColumn = module.data.rowColumn === origin ? origin % 10 === 1 ? origin + 1 : origin - 1 : module.data.rowColumn;
-        //       break;
-        //     /** for other modules in the opposite row that need to move */
-        //     case (Math.floor(module.data.rowColumn / 10) * 10) === (Math.floor(origin / 10) * 10):
-        //       module.data.rowColumn = (Math.floor(destination / 10) * 10) + module.data.rowColumn % 10;
-        //       module.data.rowColumn = module.data.rowColumn === destination ? destination % 10 === 1 ? destination + 1 : destination - 1 : module.data.rowColumn;
-        //       break;
-        //   }
-        //   break;
-      }
-    });
-    this.updateModules$();
-    return { ORIGIN: event.data.name, DESTINATION: event.zone.data.name ? event.zone.data.name : 'New Row or Column' };
-  }
-
   public addModule(module: ModuleData): void {
     const pushModule = (rowCol: number) => {
       module.rowColumn = rowCol;
@@ -723,65 +604,4 @@ export class DashboardViewService extends InternalAuditService implements OnDest
     }
   }
 
-  public onResize(axis: string, initialSizePercent: number, finalDeltaPx: number, row: number): any {
-    const modules: ModuleDraggableItem[][] = this.arrangeAndSortAllModulesToGrid();
-    const deltaWidthPercent = (finalDeltaPx) / (window.innerWidth - 66);
-    const deltaHeightPercent = (finalDeltaPx) / (window.innerHeight - 66);
-    const returnShrink = (delta: number, shrinkDimension: number, shrinkDimensionMinWidth: number): number => {
-      delta = Math.abs(delta);
-      return shrinkDimension - delta < shrinkDimensionMinWidth ? shrinkDimensionMinWidth : shrinkDimension - delta;
-    };
-    const returnExpand = (delta: number, expandDimension: number, shrinkDimensionMinWidth: number): number => {
-      delta = Math.abs(delta);
-      return expandDimension + delta > 1 - shrinkDimensionMinWidth ? 1 - shrinkDimensionMinWidth : expandDimension + delta;
-    };
-    let analyticsData = {};
-    switch (axis) {
-      case 'x':
-        const modRow = modules[row - 1];
-        if (modRow[0].data.minWidth + modRow[1].data.minWidth <= 1) {
-          if (finalDeltaPx > 0) {
-            modRow[1].data.preferredWidth = returnShrink(deltaWidthPercent, modRow[1].data.preferredWidth, modRow[1].data.minWidth);
-            modRow[0].data.preferredWidth = returnExpand(deltaWidthPercent, modRow[0].data.preferredWidth, modRow[1].data.minWidth);
-            analyticsData = {...analyticsData, X_DOWNSIZED_MODULE: modRow[1].data.name, X_UPSIZED_MODULE: modRow[0].data.name};
-          } else {
-            modRow[0].data.preferredWidth = returnShrink(deltaWidthPercent, modRow[0].data.preferredWidth, modRow[0].data.minWidth);
-            modRow[1].data.preferredWidth = returnExpand(deltaWidthPercent, modRow[1].data.preferredWidth, modRow[0].data.minWidth);
-            analyticsData = {...analyticsData, X_DOWNSIZED_MODULE: modRow[0].data.name, X_UPSIZED_MODULE: modRow[1].data.name};
-          }
-        } else {
-          /** In case of minWidth conflict (i.e., a + b > 1 ).
-           * If this is reused elsewhere may need to add logic for minHeight conflict as well*/
-          modRow[0].data.preferredWidth = modRow[0].data.minWidth / (modRow[0].data.minWidth + modRow[1].data.minWidth);
-          modRow[1].data.preferredWidth = modRow[1].data.minWidth / (modRow[0].data.minWidth + modRow[1].data.minWidth);
-        }
-        break;
-      case 'y':
-        const Y_DOWNSIZED_MODULES: string[] = [];
-        const Y_UPSIZED_MODULES: string[] = [];
-        if (finalDeltaPx > 0) {
-          for (const mod of modules[1]) {
-            mod.data.preferredHeight = returnShrink(deltaHeightPercent, mod.data.preferredHeight, mod.data.minHeight);
-            Y_DOWNSIZED_MODULES.push(mod.data.name);
-          }
-          for (const mod of modules[0]) {
-            mod.data.preferredHeight = returnExpand(deltaHeightPercent, mod.data.preferredHeight, this.findShortestSiblingInOppositeRow(mod, modules)?.data.minHeight);
-            Y_UPSIZED_MODULES.push(mod.data.name);
-          }
-        } else {
-          for (const mod of modules[0]) {
-            mod.data.preferredHeight = returnShrink(deltaHeightPercent, mod.data.preferredHeight, mod.data.minHeight);
-            Y_DOWNSIZED_MODULES.push(mod.data.name);
-          }
-          for (const mod of modules[1]) {
-            mod.data.preferredHeight = returnExpand(deltaHeightPercent, mod.data.preferredHeight, this.findShortestSiblingInOppositeRow(mod, modules)?.data.minHeight);
-            Y_UPSIZED_MODULES.push(mod.data.name);
-          }
-        }
-        analyticsData = {...analyticsData, Y_DOWNSIZED_MODULE: Y_DOWNSIZED_MODULES.sort().join(', '), Y_UPSIZED_MODULES: Y_UPSIZED_MODULES.sort().join(', ')};
-        break;
-    }
-    this.updateModules$(modules);
-    return analyticsData;
-  }
 }
